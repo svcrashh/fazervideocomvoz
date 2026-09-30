@@ -82,6 +82,7 @@ const video = {
   esconder: { seletores: ['#tour'], textos: ['Visita guiada', 'com IA'] },  // nunca aparecem
   avisos: ['.minha-notificacao'],        // seletores extras de aviso/toast (os padrões já cobrem role=status etc.)
   semente: 4242,                         // opcional: fixa a trilha (padrão: derivada de id + versão)
+  cortarEsperas: { acima: 3, antes: 1, depois: 0.6 },  // opcional: corte seco no miolo das esperas longas (carregando, publicando)
   // ganchos (todos opcionais) — rodam FORA da gravação
   async entrar({ p, v, ap, dados, check }) { /* login da demo ou conta de teste; nunca senha no código */ },
   async preparar({ p, v, dados, check }) { /* cria o dado que o vídeo precisa, pela própria tela ou API de teste */ },

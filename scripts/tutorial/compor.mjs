@@ -109,8 +109,8 @@ export function visualDaSerie(serie, serieDir) {
 
 export async function comporVersao(video, v, { modo = 'rascunho', semTrilha = false, semRender = false } = {}) {
   const dir = path.join(video.pasta, 'saida', v)
-  const log = JSON.parse(fs.readFileSync(path.join(dir, 'eventos.json'), 'utf8'))
-  const quadros = JSON.parse(fs.readFileSync(path.join(dir, 'quadros.json'), 'utf8'))
+  let log = JSON.parse(fs.readFileSync(path.join(dir, 'eventos.json'), 'utf8'))
+  let quadros = JSON.parse(fs.readFileSync(path.join(dir, 'quadros.json'), 'utf8'))
   const serieDir = path.resolve(video.pasta, video.serie || '../serie')
   const serie = fs.existsSync(path.join(serieDir, 'serie.json')) ? JSON.parse(fs.readFileSync(path.join(serieDir, 'serie.json'), 'utf8')) : {}
   let A = serie.abertura ?? 2.4, F = serie.fechamento ?? 2.8
@@ -121,6 +121,14 @@ export async function comporVersao(video, v, { modo = 'rascunho', semTrilha = fa
   // carregado quando o vídeo tem voz: sem voz, a composição não depende dele.
   const LV = video.voz ? await import('./locucao.mjs') : null
   const loc = LV && LV.lerLocucao(video, v)
+  // corte seco nas esperas longas, só quando o vídeo pede (cortes.mjs); a fala do passo nunca é cortada
+  if (video.cortarEsperas) {
+    const { cortarEsperas } = await import('./cortes.mjs')
+    const fimDaFala = loc ? (n) => { const f = loc.passos.get(n); return f ? LV.ENTRA + LV.util(f) : null } : null
+    const c = cortarEsperas(log, quadros, video.cortarEsperas, fimDaFala)
+    log = c.log; quadros = c.quadros
+    for (const [a, b] of c.cortes) console.log(`  corte seco na espera: ${a.toFixed(2).replace('.', ',')}–${b.toFixed(2).replace('.', ',')} s da gravação (${(b - a).toFixed(1).replace('.', ',')} s a menos)`)
+  }
   let falasVoz = null, eventos = log.eventos
   if (loc) {
     if (!log.voz) throw new Error(`a gravação de ${v} é de antes da voz: o passo não foi segurado pela fala. Grave de novo (node ${path.join(video.pasta, 'video.mjs')} --versao ${v}).`)
