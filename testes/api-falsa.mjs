@@ -1,0 +1,98 @@
+// Uma ElevenLabs de mentira em 127.0.0.1, para os testes rodarem sem rede e sem gastar nada.
+// Responde os endpoints que o voz.mjs usa, com o mesmo formato da API, e guarda cada pedido.
+import http from 'node:http'
+import { execFileSync } from 'node:child_process'
+import fs from 'node:fs'
+import os from 'node:os'
+import path from 'node:path'
+
+const INICIO = 0.12   // onde o som começa no MP3 falso; o alinhamento põe a 1ª letra em 0, como a API real
+const POR_LETRA = 0.055
+
+function mp3Falso(seg) {
+  const tmp = path.join(os.tmpdir(), `api-falsa-${process.pid}-${Math.random().toString(36).slice(2)}.mp3`)
+  execFileSync('ffmpeg', ['-hide_banner', '-v', 'error', '-y', '-f', 'lavfi', '-i', `sine=frequency=220:sample_rate=44100:duration=${(seg - INICIO).toFixed(3)}`,
+    '-af', `adelay=${Math.round(INICIO * 1000)},apad=pad_dur=0.05`, '-ac', '1', '-c:a', 'libmp3lame', '-b:a', '128k', tmp])
+  const b = fs.readFileSync(tmp)
+  fs.rmSync(tmp)
+  return b
+}
+
+export function alinhamentoFalso(texto) {
+  const ch = [...texto]
+  const ini = ch.map((_, i) => (i ? +(INICIO + i * POR_LETRA).toFixed(3) : 0))
+  const fim = ch.map((_, i) => +(INICIO + (i + 1) * POR_LETRA).toFixed(3))
+  return { characters: ch, character_start_times_seconds: ini, character_end_times_seconds: fim }
+}
+
+function campoMultipart(corpo, nome) {
+  const m = corpo.toString('latin1').match(new RegExp(`name="${nome}"\\r\\n\\r\\n([\\s\\S]*?)\\r\\n--`))
+  return m ? Buffer.from(m[1], 'latin1').toString('utf8') : null
+}
+
+export async function subirApiFalsa({ chave }) {
+  const estado = {
+    tier: 'starter', usados: 1000, limite: 40000, desvio: 0, devolverChaveNo401: false,
+    vozes: {}, naoUsadas: new Set(), biblioteca: [], padrao: [], custoPorLetra: 0.4,
+  }
+  const pedidos = []
+  const servidor = http.createServer((req, res) => {
+    const partes = []
+    req.on('data', (c) => partes.push(c))
+    req.on('end', () => {
+      const corpo = Buffer.concat(partes)
+      const url = new URL(req.url, 'http://x')
+      const p = { metodo: req.method, caminho: url.pathname, consulta: url.searchParams, cabecalhos: req.headers, corpo }
+      pedidos.push(p)
+      const json = (status, dados, extra = {}) => { res.writeHead(status, { 'content-type': 'application/json', 'request-id': `req-${pedidos.length}`, ...extra }); res.end(JSON.stringify(dados)) }
+      if (req.headers['xi-api-key'] !== chave || estado.devolverChaveNo401) {
+        return json(401, { detail: { type: 'authentication_error', code: 'invalid_api_key', message: `Invalid API key: ${req.headers['xi-api-key']}`, status: 'invalid_api_key' } })
+      }
+      if (req.method === 'GET' && url.pathname === '/v1/user/subscription') {
+        return json(200, { tier: estado.tier, status: estado.tier === 'free' ? 'free' : 'active', character_count: estado.usados, character_limit: estado.limite, next_character_count_reset_unix: 1790000000, voice_limit: 10, voice_slots_used: 1 })
+      }
+      if (req.method === 'GET' && url.pathname.startsWith('/v1/voices/')) {
+        // Como a API real (29/09/2026): voz da biblioteca ainda não usada na conta dá 400 voice_not_found.
+        const id = decodeURIComponent(url.pathname.slice('/v1/voices/'.length))
+        const v = estado.vozes[id]
+        return v && !estado.naoUsadas.has(id) ? json(200, v) : json(400, { detail: { status: 'voice_not_found', message: `A voice with ID '${id}' was not found.` } })
+      }
+      if (req.method === 'GET' && url.pathname === '/v1/shared-voices') return json(200, { voices: estado.biblioteca, has_more: false, total_count: estado.biblioteca.length })
+      if (req.method === 'GET' && url.pathname === '/v2/voices') return json(200, { voices: estado.padrao, has_more: false, total_count: estado.padrao.length })
+      const tts = url.pathname.match(/^\/v1\/text-to-speech\/([^/]+)\/with-timestamps$/)
+      if (req.method === 'POST' && tts) {
+        const d = JSON.parse(corpo.toString('utf8'))
+        p.json = d
+        estado.naoUsadas.delete(decodeURIComponent(tts[1]))
+        const al = alinhamentoFalso(d.text)
+        const seg = al.character_end_times_seconds.at(-1) + 0.03
+        const custo = +(d.text.length * estado.custoPorLetra).toFixed(1)
+        estado.usados += Math.ceil(custo)
+        return json(200, { audio_base64: mp3Falso(seg).toString('base64'), alignment: al, normalized_alignment: al }, { 'character-cost': String(custo) })
+      }
+      if (req.method === 'POST' && url.pathname === '/v1/forced-alignment') {
+        const texto = campoMultipart(corpo, 'text')
+        p.texto = texto
+        let t = 0
+        const words = texto.split(' ').map((w, i) => {
+          const al = alinhamentoFalso(texto)
+          const ini = (i ? al.character_start_times_seconds[t] : INICIO) + estado.desvio
+          const fim = al.character_end_times_seconds[t + w.length - 1] + estado.desvio
+          t += w.length + 1
+          return { text: w, start: +ini.toFixed(3), end: +fim.toFixed(3), loss: 0.1 }
+        })
+        return json(200, { characters: [], words, loss: 0.1 })
+      }
+      json(404, { detail: { code: 'not_found', message: `sem rota ${req.method} ${url.pathname}` } })
+    })
+  })
+  await new Promise((r) => servidor.listen(0, '127.0.0.1', r))
+  return {
+    url: `http://127.0.0.1:${servidor.address().port}`,
+    estado,
+    pedidos,
+    zerar: () => { pedidos.length = 0 },
+    tts: () => pedidos.filter((p) => p.caminho.includes('/text-to-speech/')),
+    fechar: () => new Promise((r) => servidor.close(r)),
+  }
+}
