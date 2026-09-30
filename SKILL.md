@@ -1,9 +1,18 @@
 ---
 name: fazervideocomvoz
-description: Faz vídeos de produto com VOZ EM OFF gerada pela ElevenLabs — uma narração falando por cima das telas reais do app (tutorial passo a passo, demo, update "o que mudou"), sem avatar nem rosto. Roteiro de locução aprovado antes de gastar crédito, voz escolhida por vídeo (três candidatas lendo a frase real do roteiro), ritmo calmo ou reels, legenda igual à fala com a palavra falada em destaque, trilha original que abaixa quando a voz fala, e prova de sincronia. Traz dentro o motor da /fazervideo (gravação da tela real, composição, trilha, entrega) e acrescenta a camada de voz. Use quando o pedido tiver voz — /fazervideocomvoz, "vídeo com voz", "com narração", "narrado", "locução", "locutor", "locutora", "voz em off", "voiceover", "uma voz explicando", "tutorial falado", "põe uma voz no vídeo". Pedido de vídeo sem voz é da /fazervideo.
+description: Faz vídeos de produto com VOZ EM OFF gerada pela ElevenLabs — uma narração falando por cima das telas reais do app (tutorial passo a passo, demo, update "o que mudou"), sem avatar nem rosto. Roteiro de locução aprovado antes de gastar crédito, voz escolhida por vídeo (três candidatas lendo a frase real do roteiro), legenda igual à fala com a palavra falada em destaque, trilha original que abaixa quando a voz fala, e prova de sincronia. Traz dentro o motor da /fazervideo. Fala português ou inglês, o idioma de quem pede. Use quando o pedido tiver voz — /fazervideocomvoz, "vídeo com voz", "com narração", "narrado", "locução", "voz em off", "uma voz explicando", "tutorial falado", "põe uma voz no vídeo" — ou, em inglês, "video with voice", "narrated video", "voiceover", "voice-over", "add narration", "talking tutorial". Pedido de vídeo sem voz é da /fazervideo.
 ---
 
 # /fazervideocomvoz
+
+## Idioma · Language
+
+Converse no idioma de quem pede: português ou inglês. As referências desta skill estão em português; leia-as
+como instruções e responda no idioma do usuário. O idioma do vídeo (legenda, título, voz) é decidido no briefing.
+
+Reply in the user's language, Portuguese or English. This skill's references are written in Portuguese: read them
+as instructions and answer in the user's language. The video's language (captions, titles, voice) is chosen in the
+briefing.
 
 Esta skill faz o vídeo de produto da `/fazervideo`, com o mesmo motor e o mesmo cuidado, e
 acrescenta **uma voz em off** gerada pela ElevenLabs sobre as telas gravadas. Ninguém aparece: sem
