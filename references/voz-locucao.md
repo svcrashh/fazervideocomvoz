@@ -33,7 +33,8 @@ e só depois se gasta crédito. Ele mora em `<pasta do vídeo>/voz/<versao>/rote
   - §1, as palavras que o público usa. É "fechar o caixa", não "conciliar recebíveis".
   - §2, o registro: você ou tu, formal ou próximo, e o que o público acharia falso.
 - **Do roteiro do vídeo.** No tutorial, cada `g.passo('…')` com fala vira uma fala `{ "passo": n }`,
-  na ordem dos passos, começando em 1.
+  na ordem dos passos, começando em 1. No vídeo em capítulos, cada capítulo vira uma fala
+  `{ "capitulo": n }`, na ordem do índice (`references/capitulos.md` §9). Um roteiro não mistura os dois.
 - **A abertura** diz exatamente o título do vídeo (`video.titulo`). O gravador compara sem caixa e
   sem pontuação, e recusa se for outra coisa.
 - **O fechamento** diz exatamente as `fimLinhas` da série, juntas, com a mesma comparação.
@@ -76,7 +77,10 @@ e só depois se gasta crédito. Ele mora em `<pasta do vídeo>/voz/<versao>/rote
 - número com unidade, hora, data, moeda;
 - endereço, e-mail, código.
 
-Cada uma entra na tabela de aprovação com a grafia proposta.
+Cada uma entra na tabela de aprovação com a grafia proposta. Antes de gerar o vídeo inteiro, as palavras de
+risco vão numa frase só para `voz.mjs amostras` com a voz escolhida; depois de gerar, `voz.mjs ouvir` transcreve
+cada fala e falha se uma palavra de risco não foi ouvida (`references/capitulos.md` §10). Nome inventado, nome
+artístico com número ou letra trocada e termo em inglês são os que mais erram: vão sempre no mapa.
 
 **Como se resolve sem quebrar a legenda.** A legenda mostra o `texto` do roteiro. A voz recebe o
 mesmo texto com as trocas do mapa `pronuncia`, e o `voz.mjs` devolve as palavras do `locucao.json`
@@ -145,7 +149,7 @@ Mostre ao usuário antes de gastar. Uma linha por fala:
 | `voz` | a voz escolhida (`references/voz-escolha.md`). `modelo` padrão: `eleven_multilingual_v2`. `autorizacao`: o arquivo da autorização escrita, obrigatório para voz clonada (`references/voz-escolha.md` §7) |
 | `ajustes` | opcional: sobrescreve os ajustes do perfil (`speed`, `stability`, `similarity_boost`, `style`, `use_speaker_boost`) |
 | `pronuncia` | opcional: o mapa do §4 |
-| `falas[]` | `id` (letras, números, `-` e `_`; vira o nome do arquivo), `onde` (`"abertura"`, `{ "passo": n }` ou `"fechamento"`), `texto` e, se precisar, o próprio `pronuncia` |
+| `falas[]` | `id` (letras, números, `-` e `_`; vira o nome do arquivo), `onde` (`"abertura"`, `{ "passo": n }`, `{ "capitulo": n }` ou `"fechamento"`), `texto` e, se precisar, o próprio `pronuncia` |
 
 Na hora das amostras a voz ainda não foi escolhida: o `amostras --roteiro` aceita o roteiro sem
 `voz`. O `gerar` não aceita.
@@ -204,3 +208,13 @@ Inventados. O que vale é o formato e o tom de cada um, não as palavras.
 | 3 | passo 3 | Envie para o time de SRE. | SRE → "ésse érre é" |
 
 Aqui a pronúncia mora no mapa, e a legenda continua com a palavra que o time usa.
+
+**Patch notes de um app de reservas, capítulos, reels, você.** Na tela vão os títulos de cartaz; a voz diz a
+frase inteira.
+
+| # | Onde | Título na tela | O que a voz diz | Risco |
+|---|---|---|---|---|
+| 0 | abertura | Novidades | Saiu muita coisa no Vyrta. Vem ver. | Vyrta → "Vírta" |
+| 1 | capítulo 1 | Mapa **novo** | O mapa ficou maior. Toda estação mostra quantas bicicletas tem agora. | — |
+| 2 | capítulo 2 | Pague com **Pix** | Agora dá para pagar com Pix, e o recibo chega na hora. | Pix → "Píquis" |
+| 3 | fechamento | vyrta.app | Tudo isso já está no ar. | — |

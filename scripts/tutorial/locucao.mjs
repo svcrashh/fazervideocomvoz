@@ -70,7 +70,7 @@ export function conferirLocucao(loc, dir) {
     else if (ids.has(f.id)) E.push(`${q}: "id" repetido`)
     ids.add(f.id)
     const okOnde = f.onde === 'abertura' || f.onde === 'fechamento' || (f.onde && typeof f.onde === 'object' && Number.isInteger(f.onde.passo) && f.onde.passo >= 1)
-    if (!okOnde) E.push(`${q}: "onde" tem de ser "abertura", "fechamento" ou { "passo": n } com n ≥ 1 (veio ${JSON.stringify(f.onde)})`)
+    if (!okOnde) E.push(`${q}: "onde" tem de ser "abertura", "fechamento" ou { "passo": n } com n ≥ 1 (veio ${JSON.stringify(f.onde)})${f.onde && f.onde.capitulo ? '; { "capitulo": n } é do vídeo em capítulos (references/capitulos.md), não do tutorial' : ''}`)
     else if (ondes.has(ondeTxt(f.onde))) E.push(`${q}: já existe uma fala para ${ondeTxt(f.onde)}`)
     else ondes.add(ondeTxt(f.onde))
     if (typeof f.texto !== 'string' || !f.texto.trim()) E.push(`${q}: "texto" vazio`)

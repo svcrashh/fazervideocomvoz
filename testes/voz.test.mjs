@@ -8,7 +8,7 @@ import { spawn } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import {
   aplicarPronuncia, palavrasDoAlinhamento, agrupar, montarFala, inicioVoz, chaveTake, lerRoteiro, planejar,
-  validarLocucao, motivoFora, comoPorChave, lerWav, mp3ParaWav, limparInicio, Falha,
+  validarLocucao, motivoFora, comoPorChave, lerWav, mp3ParaWav, limparInicio, Falha, julgarEscuta,
 } from '../scripts/voz.mjs'
 import { subirApiFalsa, alinhamentoFalso } from './api-falsa.mjs'
 
@@ -173,9 +173,42 @@ describe('roteiro', () => {
       && /passo 1 aparece em mais de uma fala/.test(e.message) && /falta o texto/.test(e.message) && /uma palavra só/.test(e.message) && /speed/.test(e.message))
   })
 
+  test('vídeo em capítulos: { capitulo: n } ordena como passo, e não se mistura com passo', () => {
+    const cap = { idioma: 'pt-BR', perfil: 'reels', voz: { id: 'v1' }, falas: [
+      { id: 'fecho', onde: 'fechamento', texto: 'Tudo no ar.' }, { id: 'c2', onde: { capitulo: 2 }, texto: 'Cores novas.' },
+      { id: 'abre', onde: 'abertura', texto: 'Novidades.' }, { id: 'c1', onde: { capitulo: 1 }, texto: 'Layouts novos.' }] }
+    assert.deepEqual(lerRoteiro(r(cap)).falas.map((f) => f.id), ['abre', 'c1', 'c2', 'fecho'])
+    const mistura = { ...cap, falas: [...cap.falas, { id: 'p1', onde: { passo: 1 }, texto: 'Toque.' }] }
+    assert.throws(() => lerRoteiro(r(mistura)), /mistura passo e capitulo/)
+    assert.throws(() => lerRoteiro(r({ ...cap, falas: [{ id: 'c0', onde: { capitulo: 0 }, texto: 'x' }] })), /capitulo/)
+  })
+
   test('amostras aceita roteiro sem voz', () => {
     const { voz, ...semVoz } = ok
     assert.equal(lerRoteiro(r(semVoz), { precisaVoz: false }).falas.length, 4)
+  })
+})
+
+describe('ouvir (julgarEscuta)', () => {
+  const fala = { palavras: [{ texto: 'Conheça' }, { texto: 'o' }, { texto: 'Vyrta,', dito: 'Vírta,' }, { texto: 'no' }, { texto: 'Instagram.' }] }
+  test('palavra de risco ouvida: passa, sem caixa, acento nem pontuação', () => {
+    assert.equal(julgarEscuta(fala, 'conheca o virta no instagram', ['Instagram']).falhou, false)
+  })
+  test('palavra de risco trocada: falha e diz qual', () => {
+    const j = julgarEscuta(fala, 'Conheça o Virgo no Instagram.', ['Instagram'])
+    assert.equal(j.falhou, true)
+    assert.deepEqual(j.faltas, [{ texto: 'Vyrta,', esperado: 'Vírta,', risco: true }])
+  })
+  test('a transcrição escreve a palavra de verdade, não a grafia do mapa: vale também', () => {
+    const marca = { palavras: [{ texto: 'Conheça' }, { texto: 'o' }, { texto: 'Nuvo', dito: 'Núvo' }, { texto: 'One.', dito: 'Uân.' }] }
+    assert.equal(julgarEscuta(marca, 'Conheça o Nuvo One.').falhou, false)
+    assert.equal(julgarEscuta(marca, 'Conheça o Novo On.').falhou, true)
+    assert.equal(julgarEscuta(marca, 'Conheça o NuvoOne.').falhou, false, 'duas palavras grudadas na transcrição')
+  })
+  test('palavra comum que não aparece é só informativa', () => {
+    const j = julgarEscuta(fala, 'Conheça Vírta no Instagram')
+    assert.equal(j.falhou, false)
+    assert.deepEqual(j.faltas.map((f) => f.texto), ['o'])
   })
 })
 
@@ -467,6 +500,30 @@ describe('voz.mjs contra a API falsa', () => {
       assert.equal(r2.code, 1, r2.tudo)
       assert.match(r2.out, /começa 1\d\d ms depois/)
     } finally { api.estado.desvio = 0 }
+  })
+
+  test('ouvir: transcreve cada fala sem keyterms e sai com código 1 se a palavra de risco não foi ouvida', async () => {
+    const v = video()
+    await rodar(['gerar', v.rot, '--saida', v.saida], { env })
+    const loc = path.join(v.saida, 'locucao.json')
+    Object.assign(api.estado.ouvido, { 'abertura.wav': 'Reservar uma bicicleta.', 'p1.wav': 'Abra o Virta e toque em reservar.', 'fechamento.wav': 'Pronto, boa pedalada.' })
+    api.zerar()
+    const r = await rodar(['ouvir', loc], { env })
+    assert.equal(r.code, 0, r.tudo)
+    const stt = api.pedidos.filter((p) => p.caminho === '/v1/speech-to-text')
+    assert.equal(stt.length, 3)
+    assert.equal(stt[0].modelo, 'scribe_v2')
+    assert.equal(stt[0].idioma, 'pt')
+    assert.equal(stt[0].keyterms, null, 'keyterms enviesariam a transcrição para a palavra certa')
+    assert.match(fs.readFileSync(path.join(v.saida, 'ouvido.md'), 'utf8'), /\| p1 \| Vyrta \|/)
+    api.estado.ouvido['p1.wav'] = 'Abra o Virgo e toque em reservar.'
+    try {
+      const r2 = await rodar(['ouvir', loc], { env })
+      assert.equal(r2.code, 1, r2.tudo)
+      assert.match(r2.out, /RISCO "Vyrta" \(dito "Vírta"\) não aparece/)
+      const r3 = await rodar(['ouvir', loc, '--fala', 'abertura', '--palavras', 'bicicleta'], { env })
+      assert.equal(r3.code, 0, r3.tudo)
+    } finally { api.estado.ouvido = {} }
   })
 
   test('voz que vai sair da biblioteca: o gerar avisa a data', async () => {

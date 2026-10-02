@@ -121,6 +121,9 @@ Rode `quadros.cjs --cenas` e uma tira em cada transição, abra as imagens e con
 - [ ] Alguma letra ou forma é cortada por máscara quando deveria cair ou sair?
 - [ ] O logo final está exato (proporção, cores, sem distorção) e parado por ≥ 1,5 s?
 - [ ] A marca d'água ou selo colide com formas ou texto em alguma cena?
+- [ ] Alguma tela real aparece encolhida numa moldura, com letra que não se lê na miniatura? Redesenhe (`references/capitulos.md` §5).
+- [ ] A composição muda sem motivo de uma cena para a outra, ou fica sempre igual (tela no meio, legenda embaixo) do começo ao fim?
+- [ ] No 9:16, é outra composição ou um recorte do 16:9?
 - [ ] O script imprimiu erro de página ou de fonte? Se sim, nada mais importa: corrija primeiro.
 - [ ] Os tempos das cenas batem com a folha de sincronia?
 - [ ] **Teste da troca:** com o logo e o nome de um produto de outro mundo, este vídeo ainda serviria? Aponte pelo menos três elementos que só este produto pediria (leitura, seção 6). Se sobrarem só cor e logo, volte às decisões.

@@ -33,7 +33,7 @@ function campoMultipart(corpo, nome) {
 export async function subirApiFalsa({ chave }) {
   const estado = {
     tier: 'starter', usados: 1000, limite: 40000, desvio: 0, devolverChaveNo401: false,
-    vozes: {}, naoUsadas: new Set(), biblioteca: [], padrao: [], custoPorLetra: 0.4,
+    vozes: {}, naoUsadas: new Set(), biblioteca: [], padrao: [], custoPorLetra: 0.4, ouvido: {},
   }
   const pedidos = []
   const servidor = http.createServer((req, res) => {
@@ -82,6 +82,13 @@ export async function subirApiFalsa({ chave }) {
           return { text: w, start: +ini.toFixed(3), end: +fim.toFixed(3), loss: 0.1 }
         })
         return json(200, { characters: [], words, loss: 0.1 })
+      }
+      if (req.method === 'POST' && url.pathname === '/v1/speech-to-text') {
+        // Não transcreve nada: devolve o que o teste pôs em estado.ouvido[<nome do arquivo>].
+        const nome = (corpo.toString('latin1').match(/name="file"; filename="([^"]+)"/) || [])[1]
+        p.modelo = campoMultipart(corpo, 'model_id'); p.idioma = campoMultipart(corpo, 'language_code'); p.keyterms = campoMultipart(corpo, 'keyterms')
+        const text = estado.ouvido[nome] ?? ''
+        return json(200, { language_code: 'por', text, words: text.split(' ').map((w, i) => ({ text: w, start: i * 0.3, end: i * 0.3 + 0.25, type: 'word' })) })
       }
       json(404, { detail: { code: 'not_found', message: `sem rota ${req.method} ${url.pathname}` } })
     })

@@ -10,6 +10,7 @@
 //   gerar roteiro.json --saida <video>/voz/<versao> [--teto 1500] [--sim] [--refazer id,id] [--takes pasta]
 //                                                locucao.json (Contrato L) + falas/*.wav, com o take em cache
 //   conferir locucao.json [--tolerancia 0.08] [--fala id] [--detalhe]   alinhamento forçado: cada palavra a ±80 ms
+//   ouvir locucao.json [--palavras "Nome,Sigla"] [--fala id]   transcreve cada fala e confere as palavras de risco
 //   validar locucao.json                         o Contrato L, sem rede
 // Todo comando aceita --registro <arquivo.jsonl>: uma linha por chamada à API, sem a chave.
 // A chave vem de ELEVENLABS_API_KEY ou de ~/.claude/secrets/elevenlabs.env e nunca é impressa.
@@ -306,19 +307,24 @@ function pastaTakes(p) {
 
 // ── roteiro ──────────────────────────────────────────────────────────────────────────────────────
 const ID = /^[A-Za-z0-9][A-Za-z0-9_-]*$/
-const ondeOk = (o) => o === 'abertura' || o === 'fechamento' || (o && typeof o === 'object' && Number.isInteger(o.passo) && o.passo >= 1 && Object.keys(o).length === 1)
-const ordemOnde = (o) => (o === 'abertura' ? 0 : o === 'fechamento' ? Infinity : o.passo)
-const nomeOnde = (o) => (typeof o === 'string' ? o : `passo ${o.passo}`)
+// Tutorial: { passo: n }. Vídeo em capítulos (update, lançamento): { capitulo: n }. Um roteiro usa um só.
+const tipoOnde = (o) => (o && typeof o === 'object' ? Object.keys(o)[0] : null)
+const ondeOk = (o) => o === 'abertura' || o === 'fechamento' || (o && typeof o === 'object' && Object.keys(o).length === 1
+  && ['passo', 'capitulo'].includes(tipoOnde(o)) && Number.isInteger(o[tipoOnde(o)]) && o[tipoOnde(o)] >= 1)
+const ordemOnde = (o) => (o === 'abertura' ? 0 : o === 'fechamento' ? Infinity : o[tipoOnde(o)])
+const nomeOnde = (o) => (typeof o === 'string' ? o : `${tipoOnde(o) === 'capitulo' ? 'capítulo' : 'passo'} ${o[tipoOnde(o)]}`)
 const FAIXAS = { speed: [0.7, 1.2], stability: [0, 1], similarity_boost: [0, 1], style: [0, 1] }
 
 function conferirOndes(falas, erros) {
   const vistos = new Set()
   for (const f of falas) {
-    if (!ondeOk(f.onde)) { erros.push(`${f.id || '?'}: onde tem de ser "abertura", "fechamento" ou { "passo": n } com n ≥ 1`); continue }
+    if (!ondeOk(f.onde)) { erros.push(`${f.id || '?'}: onde tem de ser "abertura", "fechamento", { "passo": n } ou { "capitulo": n }, com n ≥ 1`); continue }
     const k = nomeOnde(f.onde)
     if (vistos.has(k)) erros.push(`${f.id}: ${k} aparece em mais de uma fala (cada lugar tem uma fala só)`)
     vistos.add(k)
   }
+  const tipos = new Set(falas.map((f) => tipoOnde(f.onde)).filter(Boolean))
+  if (tipos.size > 1) erros.push('o roteiro mistura passo e capitulo: o tutorial usa { "passo": n }, o vídeo em capítulos usa { "capitulo": n }')
 }
 
 export function lerRoteiro(arq, { precisaVoz = true } = {}) {
@@ -700,6 +706,81 @@ async function cmdConferir(a) {
   return ruins ? 1 : 0
 }
 
+// ── ouvir: a transcrição confere a pronúncia ─────────────────────────────────────────────────────
+// Sem keyterms de propósito: enviesar a transcrição para a palavra certa esconderia a palavra errada.
+export const MODELO_STT = 'scribe_v2'
+export const chaveOuvida = (t) => String(t ?? '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim()
+const fichas = (t) => chaveOuvida(t).split(' ').filter(Boolean)
+
+// Quais fichas esperadas a transcrição não trouxe, pela maior subsequência comum (a ordem conta).
+export function faltasNaEscuta(esperadas, ouvidas) {
+  const n = esperadas.length, m = ouvidas.length
+  const L = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0))
+  for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--) L[i][j] = esperadas[i] === ouvidas[j] ? L[i + 1][j + 1] + 1 : Math.max(L[i + 1][j], L[i][j + 1])
+  const achada = new Array(n).fill(false)
+  for (let i = 0, j = 0; i < n && j < m;) {
+    if (esperadas[i] === ouvidas[j]) { achada[i] = true; i++; j++ } else if (L[i + 1][j] >= L[i][j + 1]) i++; else j++
+  }
+  return achada
+}
+
+// Uma fala: o que se esperava ouvir contra o que a transcrição ouviu. A transcrição escreve a palavra de verdade
+// ("One") ou o som dela ("Luma"), nunca a grafia do mapa ("Uân"): a palavra de risco vale se aparecer como está no
+// texto OU como foi dita. Palavra de risco = a que tem `dito` no locucao.json ou está em --palavras; faltou uma, a
+// fala falha. As outras palavras só informam.
+export function julgarEscuta(fala, ouvido, extras = []) {
+  const extrasK = new Set(extras.flatMap(fichas))
+  const ouvidas = fichas(ouvido), tem = new Set(ouvidas)
+  const grupos = fala.palavras.map((p) => ({ p, texto: fichas(p.texto), dito: p.dito != null ? fichas(p.dito) : null, risco: p.dito != null || fichas(p.texto).some((f) => extrasK.has(f)) }))
+  const achada = faltasNaEscuta(grupos.flatMap((g) => g.texto), ouvidas)
+  let k = 0
+  const faltas = []
+  const formas = (g) => [g.texto, g.dito].filter(Boolean)
+  // a transcrição às vezes gruda duas palavras ("LumaOne"): vale a junção com a vizinha, em qualquer das formas
+  const grudada = (i) => [i - 1, i + 1].some((j) => grupos[j] && formas(grupos[Math.min(i, j)]).some((a) => formas(grupos[Math.max(i, j)])
+    .some((b) => tem.has([...a, ...b].join('')))))
+  for (const [gi, g] of grupos.entries()) {
+    const naOrdem = g.texto.every((_, i) => achada[k + i])
+    k += g.texto.length
+    const ok = g.risco ? formas(g).some((fs) => fs.length && fs.every((f) => tem.has(f))) || grudada(gi) : naOrdem
+    if (!ok) faltas.push({ texto: g.p.texto, esperado: g.p.dito ?? g.p.texto, risco: g.risco })
+  }
+  return { riscos: grupos.filter((g) => g.risco).map((g) => g.p.texto), faltas, falhou: faltas.some((f) => f.risco) }
+}
+
+async function cmdOuvir(a) {
+  const arq = a._[0]
+  if (!arq) throw new Falha('uso: voz.mjs ouvir <locucao.json> [--palavras "Nome,Sigla"] [--fala id]')
+  const base = path.dirname(path.resolve(arq))
+  const loc = lerJson(path.resolve(arq), 'a locução')
+  const erros = validarLocucao(loc, base)
+  if (erros.length) throw new Falha(`A locução não passa no Contrato L; conserte antes de ouvir:\n${erros.map((e) => `  - ${e}`).join('\n')}`)
+  const extras = lista(a.palavras)
+  const falas = a.fala ? loc.falas.filter((f) => lista(a.fala).includes(f.id)) : loc.falas
+  if (!falas.length) throw new Falha(`--fala ${a.fala}: não há fala com esse id na locução.`)
+  const idioma = String(loc.idioma || '').split('-')[0].toLowerCase()
+  const linhas = ['| fala | risco | o que a voz devia dizer | o que a transcrição ouviu | |', '|---|---|---|---|---|']
+  let ruins = 0
+  for (const f of falas) {
+    const form = new FormData()
+    form.append('file', new Blob([fs.readFileSync(path.resolve(base, f.arquivo))], { type: 'audio/wav' }), path.basename(f.arquivo))
+    form.append('model_id', MODELO_STT)
+    if (idioma) form.append('language_code', idioma)
+    form.append('tag_audio_events', 'false')
+    const { dados } = await api('POST', '/v1/speech-to-text', { form, fala: f.id })
+    const ouvido = normalizar(dados?.text)
+    const j = julgarEscuta(f, ouvido, extras)
+    if (j.falhou) ruins++
+    const devia = f.palavras.map((p) => p.dito ?? p.texto).join(' ')
+    console.log(`${j.falhou ? '✗' : '✓'} ${f.id.padEnd(11)} ouvido: "${ouvido}"`)
+    for (const x of j.faltas) console.log(`    ${x.risco ? 'RISCO ' : ''}"${x.texto}"${x.esperado !== x.texto ? ` (dito "${x.esperado}")` : ''} não aparece na transcrição${x.risco ? '' : ' (só informativo)'}`)
+    linhas.push(`| ${f.id} | ${j.riscos.join(', ') || '—'} | ${devia} | ${ouvido} | ${j.falhou ? '✗' : '✓'} |`)
+  }
+  fs.writeFileSync(path.join(base, 'ouvido.md'), `# O que a transcrição ouviu\n\nModelo ${MODELO_STT}, sem keyterms. Palavra de risco que não aparece = ouvir aquela fala e acertar o mapa \`pronuncia\`.\n\n${linhas.join('\n')}\n\nA transcrição não julga sotaque nem entonação: isso continua com quem ouve.\n`)
+  console.log(`${ruins ? '✗' : '✓'} ${falas.length - ruins} de ${falas.length} falas com toda palavra de risco ouvida · → ${path.join(base, 'ouvido.md')}`)
+  return ruins ? 1 : 0
+}
+
 function cmdValidar(a) {
   const arq = a._[0]
   if (!arq) throw new Falha('uso: voz.mjs validar <locucao.json>')
@@ -713,7 +794,7 @@ function cmdValidar(a) {
   return 0
 }
 
-const COMANDOS = { conta: cmdConta, buscar: cmdBuscar, amostras: cmdAmostras, gerar: cmdGerar, conferir: cmdConferir, validar: cmdValidar }
+const COMANDOS = { conta: cmdConta, buscar: cmdBuscar, amostras: cmdAmostras, gerar: cmdGerar, conferir: cmdConferir, ouvir: cmdOuvir, validar: cmdValidar }
 const SEM_VALOR = new Set(['sim', 'json', 'padrao', 'detalhe'])
 
 export async function principal(argv) {

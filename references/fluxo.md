@@ -20,7 +20,7 @@ Você é um diretor de motion design sentado ao lado do usuário. Serve pra qual
 
 Nada aqui é molde de um produto. O conceito, o movimento-assinatura, os textos, as cores, o ritmo e **a música** nascem do produto da vez, da marca dele e do público dele. Um app de finanças pede outra coisa que um jogo, uma padaria, uma edtech ou um evento. Isso vale também para o que o motor desenha sozinho: o que ele faz quando ninguém decide não é a identidade de ninguém.
 
-A skill não traz vídeo de exemplo, e é de propósito: exemplo vira molde. O nível de acabamento está na régua de qualidade, mais abaixo, e em `references/direcao-criativa.md`. O que torna este vídeo impossível de confundir com outro está escrito no teste da troca da leitura (seção 6).
+A skill traz um único molde, o do vídeo em capítulos (`assets/capitulos/`), e ele é estrutura sem marca: a composição, o índice, a transição. O fundo, as fontes, a forma dos objetos e o movimento saem da leitura de cada produto. O nível de acabamento está na régua de qualidade, mais abaixo, e em `references/direcao-criativa.md`. O que torna este vídeo impossível de confundir com outro está escrito no teste da troca da leitura (seção 6).
 
 ## Como conversar
 
@@ -62,7 +62,8 @@ Fora disso, trabalhe sem ping-pong e narre o progresso em frases curtas.
 
   Cada opção diz o efeito ("tela real do app, uma tarefa, legenda por passo").
 - **Série:** pergunte também (ou deduza) se é uma peça avulsa ou parte de uma série. Numa série a identidade é decidida uma vez, a partir da leitura: o visual declarado elemento por elemento no `serie.json` e a música no `identidade.json` (`references/tipos.md` §11). Ela é mostrada numa prancha e aprovada antes do segundo vídeo. Depois disso, as peças seguintes pulam o briefing: só perguntam o que muda.
-- **Tutorial** (e demo ou update com tela real): siga o mesmo fluxo com as trocas de `references/tutorial.md`:
+- **Update, patch notes, lançamento, demo, anúncio:** vídeo em capítulos, com a interface redesenhada (`references/capitulos.md`). Leia inteiro antes do briefing.
+- **Tutorial** (ensinar uma tarefa): siga o mesmo fluxo com as trocas de `references/tutorial.md`:
   - a imagem é a tela real gravada, nunca recriada;
   - o que envolve a tela (fundo, moldura, legenda, selo, título, abertura, fechamento, realce) sai da leitura, não do desenho padrão do motor;
   - o briefing é o da ficha;
@@ -85,7 +86,7 @@ Fora disso, trabalhe sem ping-pong e narre o progresso em frases curtas.
    - Vá até a origem do que o bruto aponta (o componente, o documento) e olhe o produto: print do site público, prints do app, a folha de toques num tutorial. Use também o que o usuário colou ou anexou, e a descrição dele quando não houver mais nada.
    - Escreva o `leitura.md` na pasta da série (ou do vídeo), com as sete seções: o produto, o público, a cara do produto, o som do público, as decisões, o teste da troca, o que não deu para saber. Cada afirmação das quatro primeiras traz `arquivo:linha` (caminho a partir da raiz do repositório) ou endereço; o que não tem evidência se escreve como palpite, e o que a própria fonte chama de premissa continua premissa.
    - Anote também as restrições que aparecerem: regras de linguagem, dados sensíveis, números que não podem ser inventados.
-4. **O que mostrar, decidido por você**, dentro do que o tipo permite: tutorial, update e demo de tela usam a **tela real**, gravada pelo motor de captura (`references/tutorial.md`). Nos tipos de marketing, escolha entre telas reais, UI recriada ou só tipografia e formas (critérios em `references/marca.md` → "Telas do produto"):
+4. **O que mostrar, decidido por você**, dentro do que o tipo permite: o tutorial usa a **tela real**, gravada pelo motor de captura (`references/tutorial.md`). Update, demo e lançamento usam a **interface redesenhada** em capítulos (`references/capitulos.md`), com a tela real só como prova, em tela cheia. Nos outros tipos de marketing, escolha entre UI recriada, telas reais em tela cheia ou só tipografia e formas (critérios em `references/marca.md` → "Telas do produto"). Tela real encolhida numa moldura nunca é opção:
    - dá pra rodar o sistema localmente ou abrir o site público? Capture as telas reais com Playwright;
    - a tela precisa de login, dado sensível ou estado difícil de produzir? Recrie a interface em HTML com os tokens do produto, com dados fictícios;
    - o produto não tem tela (serviço, físico, evento)? Use tipografia, formas, fotos que o usuário tenha e ícones;

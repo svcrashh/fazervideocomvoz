@@ -57,7 +57,9 @@ Projeto novo, marca ainda crua, usuário que "só quer um vídeo": não invente 
 
 ## Telas do produto: capturar, reaproveitar ou recriar
 
-Decida sozinho, nesta ordem:
+Em update, demo, lançamento e anúncio a resposta padrão é a 3 (recriar), no formato de capítulos
+(`references/capitulos.md`): a tela real entra só como prova, em tela cheia. Uma tela inteira encolhida no quadro
+fica ilegível e reprova. Fora disso, decida sozinho, nesta ordem:
 
 1. **Reaproveitar:** prints, gravações de tela ou mockups que já existem (na conversa, no repo, em `docs/`, `presskit`, loja de apps). Os mais recentes ganham.
 2. **Capturar do sistema rodando:** quando dá pra subir o projeto local ou abrir o site público.

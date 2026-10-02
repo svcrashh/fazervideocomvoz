@@ -879,7 +879,14 @@ function renderAt(t) {
 
 async function iniciar() {
   const fontes = VIDEO.fontes || []
-  await Promise.all(fontes.flatMap((f) => [`normal 400 64px "${f}"`, `italic 400 64px "${f}"`].map((s) => document.fonts.load(s).catch(() => []))))
+  // Carrega TODA face declarada das famílias (todo peso e estilo do fontes.css), não só a 400: um título em 700
+  // medido antes de a 700 chegar sai com a largura da fonte reserva, e a checagem de largura mente.
+  const nomeFam = (f) => f.replace(/^["']|["']$/g, '')
+  const faces = [...document.fonts].filter((ff) => fontes.includes(nomeFam(ff.family)))
+  await Promise.all([
+    ...faces.map((ff) => ff.load().catch(() => null)),
+    ...fontes.flatMap((f) => [`normal 400 64px "${f}"`, `italic 400 64px "${f}"`].map((s) => document.fonts.load(s).catch(() => []))),
+  ])
   // document.fonts.check diz "ok" mesmo quando o glifo cai na fonte reserva: medir é o que prova.
   const cv = document.createElement('canvas').getContext('2d')
   const larg = (fonte) => { cv.font = fonte; return cv.measureText('Ágil façanha 0123 — Wy').width }
