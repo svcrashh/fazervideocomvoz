@@ -88,7 +88,7 @@ Os sons vêm de `assets/audio/sons.py` e as transições estão em `references/t
 ## 2. Demo de produto
 
 - **Objetivo:** mostrar o produto funcionando e dar vontade de usar. Não ensina passo a passo.
-- **Imagem:** vídeo em capítulos (`references/capitulos.md`): a interface redesenhada, grande e animada, um capítulo por momento "uau"; a tela real só como prova, em tela cheia. Tela real encolhida numa moldura reprova.
+- **Imagem:** o estilo escolhido no `SKILL.md` ("O estilo"): texto que se digita quando o produto tem caixa de texto, antes e depois, lista que corre ou capítulos com índice (`references/capitulos.md`) para vários momentos "uau". A tela real só como prova, em tela cheia. Tela real encolhida numa moldura reprova.
 - **Perguntas próprias:** qual o fluxo "uau" (o momento que vende), para quem, o que não pode aparecer, onde vai passar.
 - **Duração e formatos:** 30–60 s; 16:9 para site e pitch, 9:16 para redes.
 - **Música:** papel de fundo ou meio-termo, marcando os cortes. Gênero: da leitura.
@@ -173,13 +173,13 @@ Os sons vêm de `assets/audio/sons.py` e as transições estão em `references/t
 ## 9. Update / "o que mudou"
 
 - **Objetivo:** mostrar para quem já usa o que mudou e onde achar.
-- **Imagem:** vídeo em capítulos (`references/capitulos.md`): abertura com o índice numerado, um capítulo por novidade com a interface redesenhada fazendo antes → agora, fecho com o índice completo e os números grandes. Uma novidade só, num vídeo curto dentro do app, pode ser tela real (motor do tutorial) em tela cheia.
+- **Imagem:** o estilo escolhido no `SKILL.md` ("O estilo"); lista que corre ou antes e depois para poucas novidades, capítulos com índice (`references/capitulos.md`) para 6 a 12 no site, nunca duas vezes seguidas para o mesmo produto. Em capítulos: abertura com o índice numerado, um capítulo por novidade com a interface redesenhada fazendo antes → agora, fecho com o índice completo e os números grandes. Uma novidade só, num vídeo curto dentro do app, pode ser tela real (motor do tutorial) em tela cheia.
 - **Perguntas próprias:** o que mudou (só o que está em produção), para quem, a data, a conta de exemplo autorizada cujos dados aparecem.
 - **Duração e formatos:** uma novidade, 15–45 s; patch notes com várias, 1min30–3min. 16:9 e 9:16 recompostos (`references/capitulos.md` §8).
 - **Música:** papel de fundo. Gênero: da leitura; numa série de updates, a mesma identidade dos tutoriais.
 - **Sons:** baixa para média (virada no antes → agora, sucesso no fim).
 - **Texto:** etiqueta `01 · ÁREA`, título de cartaz de 2–3 palavras com a palavra-chave na cor, 1–2 linhas de apoio. Não é a fala.
-- **QA:** a folha de quadros de cada formato (`references/capitulos.md` §12); o "antes" redesenhado mostra o que existia de verdade, nunca um defeito inventado para o "agora" brilhar.
+- **QA:** a folha de quadros de cada formato; o "antes" redesenhado mostra o que existia de verdade, nunca um defeito inventado para o "agora" brilhar.
 - **Série:** notas de versão em vídeo, uma por release, com trilha por semente.
 
 ## 10. Outro

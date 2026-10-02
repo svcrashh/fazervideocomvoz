@@ -1,0 +1,55 @@
+{
+  "titulo": "Brota · setembro em números (marca fictícia)",
+  "idioma": "pt-BR",
+  "formatos": ["9x16", "1x1", "16x9"],
+  "chamada": "Brota · setembro em números",
+  "lista_numerada": false,
+  "marca": {
+    "nome": "brota",
+    "cores": {
+      "fundo": "#FFF6E5",
+      "texto": "#17332A",
+      "acento": "#E8366A",
+      "legendaFundo": "#FFFFFF",
+      "cartoes": ["#FFC93C", "#3DBE8B", "#6C8CFF"]
+    },
+    "fontes": {
+      "numero": { "familia": "Bricolage Grotesque", "peso": 800, "espaco": -0.02 },
+      "texto": { "familia": "Space Grotesk", "peso": 500 },
+      "etiqueta": { "familia": "Space Grotesk", "peso": 700 }
+    },
+    "grade": false,
+    "brilho": 0.16,
+    "grao": 0.05
+  },
+  "voz": {
+    "id": "2CECaLAGTS5NRGxgbcxr",
+    "nome": "Davi Andrei",
+    "perfil": "reels",
+    "ajustes": { "speed": 1.04 },
+    "pronuncia": {}
+  },
+  "trilha": {
+    "semente": 2002,
+    "identidade": {
+      "genero": "acustico", "bpm": [84, 92], "modos": ["maior"], "tons": ["C", "D", "F", "G"],
+      "instrumentos": { "harmonia": ["corda", "piano"], "baixo": ["bass_note"], "percussao": ["kick", "shaker", "aro"], "melodia": ["pluck"], "textura": ["pad_note"] }
+    }
+  },
+  "blocos": [
+    {
+      "tipo": "contador", "de": 0, "ate": 1248, "rotulo": "hortas brotaram em casa",
+      "fala": "Mil duzentas e quarenta e oito hortas brotaram em setembro."
+    },
+    {
+      "tipo": "cartoes", "cada": 1.5,
+      "itens": [
+        { "valor": 38, "rotulo": "bairros atendidos" },
+        { "valor": 4.9, "casas": 1, "de": 0, "rotulo": "de nota na loja" },
+        { "valor": 15, "sufixo": " min", "rotulo": "de cuidado por semana" }
+      ]
+    },
+    { "tipo": "refrao", "texto": "1.248 hortas" },
+    { "tipo": "fecho", "bordao": "Plante hoje. Colha no mês que vem." }
+  ]
+}

@@ -1,6 +1,6 @@
 ---
 name: fazervideocomvoz
-description: Faz vídeos de produto com VOZ EM OFF gerada pela ElevenLabs, sem avatar nem rosto. Update, patch notes, lançamento, demo e anúncio saem em capítulos — interface redesenhada grande e animada (nunca tela encolhida), abertura com índice numerado, título de cartaz por capítulo, 16:9 e 9:16 recompostos; tutorial passo a passo sai com a tela real e a legenda igual à fala. Roteiro de locução aprovado antes de gastar crédito, dicionário de pronúncia conferido por transcrição, voz escolhida por vídeo (três candidatas lendo a frase real do roteiro), trilha original que abaixa quando a voz fala, folha de quadros de cada formato olhada antes de entregar. Traz dentro o motor da /fazervideo. Fala português ou inglês, o idioma de quem pede. Use quando o pedido tiver voz — /fazervideocomvoz, "vídeo com voz", "com narração", "narrado", "locução", "voz em off", "uma voz explicando", "tutorial falado", "põe uma voz no vídeo" — ou, em inglês, "video with voice", "narrated video", "voiceover", "voice-over", "add narration", "talking tutorial". Pedido de vídeo sem voz é da /fazervideo.
+description: Faz vídeos de produto com VOZ EM OFF gerada pela ElevenLabs, sem avatar nem rosto. Antes de tudo olha o produto (repositório, telas, o que mudou, público, canal), recomenda um de sete estilos com o porquê em uma linha e pergunta qual usar, com vídeo de exemplo de cada — tela real com câmera (tutorial), texto que se digita, lista que corre, número que conta, antes e depois, teaser de luz, capítulos com índice —, cada um com molde de verdade, sem marca embutida, 16:9 e 9:16 recompostos (nunca tela encolhida). Roteiro de locução aprovado antes de gastar crédito, dicionário de pronúncia conferido por transcrição, voz escolhida por vídeo (três candidatas lendo a frase real do roteiro), trilha original que abaixa quando a voz fala, folha de quadros de cada formato olhada antes de entregar. Traz dentro o motor da /fazervideo. Fala português ou inglês, o idioma de quem pede. Use quando o pedido tiver voz — /fazervideocomvoz, "vídeo com voz", "com narração", "narrado", "locução", "voz em off", "uma voz explicando", "tutorial falado", "põe uma voz no vídeo" — ou, em inglês, "video with voice", "narrated video", "voiceover", "voice-over", "add narration", "talking tutorial". Pedido de vídeo sem voz é da /fazervideo.
 ---
 
 # /fazervideocomvoz
@@ -29,22 +29,56 @@ acrescenta, e em que ponto do fluxo.
 Pedido sem voz nenhuma: se a `/fazervideo` estiver instalada, ele é dela. Se não estiver, siga
 `references/fluxo.md` e pule tudo o que está abaixo.
 
-## Dois modos, e qual é o padrão
+## O estilo: olhar o produto, recomendar, perguntar
 
-| Modo | Quando | Imagem | Texto na tela |
-|---|---|---|---|
-| **Capítulos** (padrão) | update, patch notes, lançamento, demo, anúncio, explainer: tudo o que **mostra** o produto | interface **redesenhada** em código, grande e animada, só com o que importa; tela real só como prova, em tela cheia | etiqueta + título de cartaz + 1–2 linhas de apoio; **não** é a fala |
-| **Tutorial** | ensinar **uma tarefa** a quem vai repetir | a tela real gravada pelo motor de captura | a legenda é a fala, com a palavra falada em destaque |
+A skill tem **sete estilos**, cada um com um molde de verdade. O estilo é escolhido **antes do briefing**,
+logo depois do reconhecimento (passo 0.1 do fluxo), e vale para qualquer pedido com voz.
 
-**Capítulos** está em `references/capitulos.md`: leia inteiro antes do briefing de um update, lançamento ou
-demo. Abertura com logo e índice numerado que se preenche; um capítulo por novidade (5–12 s); fecho com o
-índice completo, números grandes e logo; 16:9 e 9:16 recompostos, nunca um recorte do outro. A voz manda no
-tempo de cada capítulo.
+| Estilo (`id`) | O que é | Molde |
+|---|---|---|
+| Tela real com câmera (`tela-real-com-camera`) | tutorial: a tela real gravada, a câmera vai até o campo da vez, véu e desfoque no resto, cartão de passo, "Pronto!" | `moldes/tela-real-com-camera/` |
+| Texto que se digita (`texto-que-se-digita`) | a pergunta ou o pedido escrito na tela no quadro 0, o cursor, e o produto respondendo | `moldes/texto-que-se-digita/` |
+| Lista que corre (`lista-que-corre`) | novidades sem índice: frase curta + prova de tela por item, em rajada, lista ou cartaz; o muro no fim | `moldes/lista-que-corre/` |
+| Número que conta (`numero-que-conta`) | um número gigante com rótulo de três palavras; vídeo de 6–20 s ou bloco de abertura e fecho dos outros | `moldes/numero-que-conta/` |
+| Antes e depois (`antes-e-depois`) | o mesmo enquadramento em dois estados, cortado no clique; ou o zoom-out que revela o todo | `moldes/antes-e-depois/` |
+| Teaser de luz (`teaser-de-luz`) | fundo escuro, uma linha de luz desenha pedaços da interface e revela o produto no fim | `moldes/teaser-de-luz/` |
+| Capítulos com índice (`capitulos-com-indice`) | abertura com índice numerado, um capítulo de cartaz por novidade com a interface redesenhada, fecho com o índice | `assets/capitulos/` + `references/capitulos.md` |
 
-**Tutorial** está em `references/tutorial.md` e `references/voz-tutorial.md`.
+O catálogo está em `references/catalogo/`: `regras.md` (as 12 regras que valem para todo estilo), `escolha.md`
+(o guia de escolha), `estilos/<id>.md` (uma ficha por estilo) e `sem-molde.md` (estilos e ideias de roteiro que
+ainda não têm molde). **Leia `regras.md` e `escolha.md` antes de recomendar.**
 
-Na dúvida, capítulos. Tela real encolhida numa moldura, com a legenda da fala embaixo, foi recusada em todo
-vídeo que a usou (`references/capitulos.md` §2).
+1. **Olhe o produto,** no reconhecimento do fluxo (0.1), antes de perguntar: o repositório e as telas; **o que
+   mudou** (`git log`, changelog, a conversa); **para quem é**; **onde o vídeo vai passar**; quantas novidades ou
+   passos são; se o produto tem uma caixa de texto (busca, IA, chat). Daí saem cinco valores:
+   - objetivo: `ensinar` · `novidade` · `lancar` · `atencao` · `contas`;
+   - canal: `site` · `whatsapp` · `reels` · `feed` · `telao`;
+   - produto: `b2b` · `jovem` · `leigo` · `financas` · `criador` · `jogo` · `varejo` · `outro`;
+   - o número de itens e se há caixa de texto.
+2. **Rode a tabela:**
+   ```sh
+   node $SKILL/scripts/recomendar-estilo.mjs --objetivo novidade --canal reels --produto jovem --itens 5 --nome "Produto" [--caixa-de-texto]
+   ```
+   Ela devolve o recomendado com o porquê, mais três que também servem, cada um com o vídeo de exemplo, e o
+   tom para aquele tipo de produto. O `--nome` lê o histórico do produto: **capítulos com índice nunca é
+   recomendado duas vezes seguidas para o mesmo produto.** A tabela é o ponto de partida: se a leitura mostrar
+   algo que ela não sabe (o produto não tem tela, o dono já recusou um estilo), mude e diga por quê.
+3. **Diga o recomendado e o porquê em uma linha:** "Recomendo **Lista que corre**: são cinco novidades para
+   Reels e o público é jovem; uma por segundo, com a prova na tela."
+4. **Pergunte qual estilo** com `AskUserQuestion`: o recomendado primeiro, com "(Recomendado)", e mais dois ou
+   três que também servem. Cada opção traz uma frase do que é e o caminho do vídeo de exemplo
+   (`moldes/<id>/exemplo/`); abra os exemplos para o usuário (`open`, `start ""` ou `xdg-open`). Se ele não
+   escolher, ou não houver como perguntar, siga com o recomendado e diga isso numa linha.
+5. **Leia a ficha** (`references/catalogo/estilos/<id>.md`) e o `MOLDE.md` do molde escolhido (nos capítulos,
+   `references/capitulos.md` inteiro) antes do briefing: o briefing pergunta o que o molde precisa (as telas, o
+   número, o texto digitado, o antes e o depois).
+6. **Pediram uma ideia** (gancho, virada, piada) ou um estilo que ainda não tem molde? Procure em
+   `references/catalogo/sem-molde.md`. Pode sugerir como ideia de roteiro, mas avise que o vídeo sai **no molde
+   mais próximo**, o que a própria linha diz.
+7. **Ao entregar,** registre: `node $SKILL/scripts/recomendar-estilo.mjs registrar --nome "Produto" --estilo <id> --video <pasta>`.
+
+Tela real encolhida numa moldura, com a legenda da fala embaixo, foi recusada em todo vídeo que a usou: nenhum
+estilo faz isso (`references/catalogo/regras.md`, regra 2).
 
 ## Sete regras a mais, sem exceção
 
@@ -67,12 +101,14 @@ vídeo que a usou (`references/capitulos.md` §2).
 5. **Nenhum nome sem dicionário e transcrição.** Antes de gerar, toda palavra de risco (produto, nome
    próprio, termo em inglês, sigla) tem grafia decidida no mapa `pronuncia`. Depois de gerar,
    `voz.mjs ouvir` transcreve cada fala; palavra de risco que a transcrição não ouviu não vai para a
-   montagem (`references/capitulos.md` §10).
+   montagem (`references/capitulos.md` §10). Número por extenso ("doze") bate com o algarismo da transcrição
+   ("12"), e endereço (`marca.com/7`) aceita uma letra de diferença.
 6. **Nenhuma tela encolhida.** A interface que aparece pequena demais para ler é redesenhada, grande, só
    com o que importa. A tela real entra só como prova, em tela cheia e com zoom no detalhe. Nenhuma
    gravação em conta real conta visita, clique ou aparelho: as chamadas de métrica são interceptadas.
 7. **Nenhuma entrega sem a folha de quadros de cada formato,** olhada: nada vazio, nada ilegível, nada
-   cortado no vertical (`references/capitulos.md` §12). O ✓ de um script não substitui olhar.
+   cortado no vertical (`references/capitulos.md` §12; cada molde gera a sua folha). O ✓ de um script não
+   substitui olhar.
 
 O script é `node $SKILL/scripts/voz.mjs <comando>`: Node 18 ou mais novo, sem dependência, com o
 ffmpeg que o motor já pede.
@@ -108,7 +144,9 @@ Eu escrevo a partir da leitura e do roteiro. As regras e o formato estão em
   6 a 10 s) e fecho; a fala diz o que se ganha, não lê a tela (`references/capitulos.md` §9);
 - **tutorial:** uma frase por passo, dita antes da mão; a abertura é o título, o fechamento as `fimLinhas`;
   o nome do botão como está na tela;
-- nos dois: o **dicionário de pronúncia** do vídeo inteiro, decidido antes de gastar
+- **nos seis moldes de `moldes/`:** o `MOLDE.md` diz quantas falas, de quanto tempo e onde cada uma entra
+  (`onde`); a voz fala metade do tempo, não o vídeo inteiro (`references/catalogo/regras.md`, regra 8);
+- em todos: o **dicionário de pronúncia** do vídeo inteiro, decidido antes de gastar
   (`references/capitulos.md` §10).
 
 O usuário aprova numa tabela com:
@@ -179,6 +217,16 @@ Celular e computador têm cada um o seu roteiro ("Toque em" não é "Clique em")
 (abertura, fechamento) saem do mesmo take.
 
 ### 6 · Montar
+
+**Os seis moldes de `moldes/`** (tela real com câmera, texto que se digita, lista que corre, número que conta,
+antes e depois, teaser de luz): o `moldes/<id>/MOLDE.md` diz tudo — parâmetros, o comando que renderiza, onde a
+voz entra, as variações e os limites. Comece copiando o `exemplo.json` do molde e trocando cores, fontes, logo,
+textos, telas e números pelos da leitura; nada de marca está embutido no molde. Rascunho primeiro, folha olhada,
+depois o final. Requisitos que valem para todos:
+
+- Playwright: `scripts/playwright.cjs` acha sozinho; se não achar, `PLAYWRIGHT_PATH=<pasta>/node_modules/playwright`.
+- Trilha: Python com numpy e scipy, num venv do projeto do vídeo (`FAZERVIDEO_PY` ou `PYTHON`, como o molde disser).
+- Rascunho: 30 fps sem motion blur, segundos; final: 60 fps com subquadros, minutos por formato.
 
 **Capítulos** (`references/capitulos.md` §11 e `assets/capitulos/LEIA.md`):
 
@@ -264,7 +312,10 @@ Antes de mostrar o rascunho, além das folhas que o fluxo manda olhar:
 | `scripts/voz.mjs gerar` | a locução do vídeo: `locucao.json` + `falas/*.wav`, com cache e teto |
 | `scripts/voz.mjs conferir` | provar que cada palavra está onde a legenda acende (±80 ms) |
 | `scripts/voz.mjs ouvir` | transcrever cada fala e conferir as palavras de risco (`ouvido.md`) |
-| `references/capitulos.md` | **update, lançamento, demo, anúncio**: o vídeo em capítulos com a interface redesenhada, índice, 16:9 e 9:16, dicionário, folha de quadros |
+| `references/catalogo/` | **antes do briefing**: as 12 regras, o guia de escolha, uma ficha por estilo e o que ainda não tem molde |
+| `scripts/recomendar-estilo.mjs` | a tabela objetivo × canal × produto: o estilo recomendado, o porquê e as alternativas; `registrar` guarda o último estilo do produto |
+| `moldes/<id>/` | os seis moldes novos, cada um com `MOLDE.md` (como renderizar), `exemplo.json` (Lumma One) e uma segunda marca, e `exemplo/` com o vídeo de exemplo |
+| `references/capitulos.md` | **estilo capítulos com índice**: o vídeo em capítulos com a interface redesenhada, índice, 16:9 e 9:16, dicionário, folha de quadros |
 | `assets/capitulos/` | o molde de exemplo do vídeo em capítulos (kit de componentes + abertura, capítulo e fecho), sem marca; `LEIA.md` diz como usar |
 | `scripts/capitulos/` | `novo.mjs` (cria o projeto), `render.mjs` (capítulo nos dois formatos + folha), `montar.mjs` (junta, põe a voz, folha da trilha) |
 | `scripts/voz.mjs validar` | provar o contrato da locução, sem rede |
@@ -272,4 +323,4 @@ Antes de mostrar o rascunho, além das folhas que o fluxo manda olhar:
 | `references/voz-escolha.md` | escolher a voz: filtros, regras da biblioteca, ritmo, Voice Design, clone, idiomas, plano e custo |
 | `references/voz-tutorial.md` | a voz no modo tutorial: tempos, legenda falada, saídas novas |
 | `references/voz-mix.md` | o mix com voz e as medidas que o provam |
-| `testes/` | `node --test "$SKILL/testes/*.test.mjs"`: os testes do `voz.mjs`, sem rede |
+| `testes/` | `node --test "$SKILL/testes/*.test.mjs"`: os testes do `voz.mjs` e do `recomendar-estilo.mjs`, sem rede |

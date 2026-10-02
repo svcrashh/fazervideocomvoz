@@ -8,7 +8,7 @@ import { spawn } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import {
   aplicarPronuncia, palavrasDoAlinhamento, agrupar, montarFala, inicioVoz, chaveTake, lerRoteiro, planejar,
-  validarLocucao, motivoFora, comoPorChave, lerWav, mp3ParaWav, limparInicio, Falha, julgarEscuta,
+  validarLocucao, motivoFora, comoPorChave, lerWav, mp3ParaWav, limparInicio, Falha, julgarEscuta, porExtenso,
 } from '../scripts/voz.mjs'
 import { subirApiFalsa, alinhamentoFalso } from './api-falsa.mjs'
 
@@ -204,6 +204,20 @@ describe('ouvir (julgarEscuta)', () => {
     assert.equal(julgarEscuta(marca, 'Conheça o Nuvo One.').falhou, false)
     assert.equal(julgarEscuta(marca, 'Conheça o Novo On.').falhou, true)
     assert.equal(julgarEscuta(marca, 'Conheça o NuvoOne.').falhou, false, 'duas palavras grudadas na transcrição')
+  })
+  test('número por extenso na fala e algarismo na transcrição: vale', () => {
+    const num = { palavras: [{ texto: 'Doze', dito: 'Doze' }, { texto: 'novidades,' }, { texto: 'mil' }, { texto: 'duzentas', dito: 'duzentas' }, { texto: 'e' }, { texto: 'quarenta' }, { texto: 'e' }, { texto: 'oito', dito: 'oito' }, { texto: 'fãs.' }] }
+    assert.equal(julgarEscuta(num, '12 novidades, 1.248 fãs.').falhou, false)
+    assert.equal(julgarEscuta(num, '13 novidades, 1.248 fãs.').falhou, true)
+    assert.equal(porExtenso(2026), 'dois mil e vinte e seis')
+    assert.equal(porExtenso(1500), 'mil e quinhentos')
+    assert.equal(porExtenso(100), 'cem')
+  })
+  test('endereço grafado com uma letra a menos pela transcrição: vale; com outra palavra, não', () => {
+    const site = { palavras: [{ texto: 'Acesse' }, { texto: 'lummaone.com/7', dito: 'lúma uân ponto com barra sete' }] }
+    assert.equal(julgarEscuta(site, 'Acesse lumaone.com/7').falhou, false)
+    assert.equal(julgarEscuta(site, 'Acesse lumaone.com/8').falhou, true)
+    assert.equal(julgarEscuta(site, 'Acesse lumen.com/7').falhou, true)
   })
   test('palavra comum que não aparece é só informativa', () => {
     const j = julgarEscuta(fala, 'Conheça Vírta no Instagram')

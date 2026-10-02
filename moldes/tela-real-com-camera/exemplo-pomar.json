@@ -1,0 +1,28 @@
+{
+  "id": "pomar-montar-cesta",
+  "gravacao": "~/Desktop/moldes-teste/tela-real-com-camera/gravacoes/pomar/saida/computador",
+  "saida": "~/Desktop/moldes-teste/tela-real-com-camera/videos",
+  "formatos": ["16x9", "9x16"],
+  "titulo": { "16x9": ["Monte a sua cesta", "da semana"], "9x16": ["Monte a", "sua cesta", "da semana"] },
+  "rotulo": "pomar · passo a passo",
+  "textoPasso": "Passo {n} de {N}",
+  "endereco": "pomar.app",
+  "etapas": [
+    { "passos": [1, 2] },
+    { "intertitulo": "A entrega", "passos": [3, 4] }
+  ],
+  "fim": { "linha": "Pronto!", "apoio": "Sua cesta chega quinta" },
+  "voz": { "locucao": "~/Desktop/moldes-teste/tela-real-com-camera/voz/pomar/locucao.json" },
+  "marca": {
+    "cores": { "fundo": "#FFF8EE", "superficie": "#FFFFFF", "texto": "#1E2A22", "destaque": "#FF4F79", "sobreDestaque": "#FFFFFF", "veu": "#1E2A22", "fimFundo": "#12A150", "fimTexto": "#FFFFFF" },
+    "veu": 0.42,
+    "textura": "pontos",
+    "fontesPasta": "~/Desktop/lumma-patch-notes/molde/fontes",
+    "fontes": {
+      "titulo": { "familia": "Bricolage Grotesque", "peso": 800, "caixa": "normal" },
+      "texto": { "familia": "Space Grotesk", "peso": 500, "pesoForte": 700 },
+      "mono": { "familia": "Space Grotesk", "peso": 700 }
+    },
+    "logo": { "arquivo": "~/Desktop/moldes-teste/tela-real-com-camera/pomar-simbolo.svg", "w": 150, "h": 150 }
+  }
+}

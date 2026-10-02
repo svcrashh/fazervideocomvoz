@@ -1,0 +1,41 @@
+{
+  "nome": "lumma",
+  "formatos": ["16x9", "9x16"],
+  "marca": {
+    "nome": "LUMMA1",
+    "cores": { "fundo": "#051524", "superficie": "#0A2236", "campo": "#123049", "borda": "#1E4560", "texto": "#FDEDD4", "apoio": "#A9A498", "destaque": "#FF7900", "ok": "#FF7900", "sobreDestaque": "#051524", "sombra": "#000000" },
+    "fontes": { "titulo": "Oswald", "texto": "Rubik", "mono": "Source Code Pro" },
+    "caixaAlta": true,
+    "fundo": { "grade": 64, "brilho": 0.14 },
+    "logo": { "arquivo": "lumma1-cream.png", "arquivo_origem": "midia/lumma1-cream.png", "proporcao": 5.33 }
+  },
+  "voz": {
+    "locucao": "voz/lumma/locucao.json",
+    "trechos": [
+      { "fala": "c04", "de": 3.5, "ate": 6.4, "em": 0.9 },
+      { "fala": "c04", "de": 0.0, "ate": 3.52, "em": 6.4 }
+    ]
+  },
+  "cenas": [
+    {
+      "tipo": "pergunta", "dur": 11.2,
+      "titulo": "Seus números no press kit", "destaque": "números",
+      "rotulo": "Instagram",
+      "placeholder": "Cole o link do perfil, do jeito que vier.",
+      "texto": "https://www.instagram.com/g7venn/?igsh=MWx0dDNyY2Fh",
+      "modo": "cola", "em": 1.25,
+      "limpa": { "fica": "g7venn", "prefixo": "@", "em": 2.9, "selo": "Link limpo" },
+      "resposta": {
+        "em": 5.6, "tipo": "numeros",
+        "itens": [ { "rotulo": "Instagram · @g7venn", "valor": "7.129" }, { "rotulo": "TikTok · @g7ven__", "valor": "70" } ],
+        "total": { "rotulo": "seguidores somados", "valor": "7.199" }
+      }
+    },
+    {
+      "tipo": "fecho", "dur": 4.8,
+      "digita": "lummaone.com/7", "em": 0.25,
+      "bordao": "Cole do jeito que vier.",
+      "endereco": "lummaone.com/7"
+    }
+  ]
+}

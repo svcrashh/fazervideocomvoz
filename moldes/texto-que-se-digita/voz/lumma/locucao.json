@@ -1,0 +1,143 @@
+{
+ "versao": 1,
+ "idioma": "pt-BR",
+ "voz": {
+  "provedor": "elevenlabs",
+  "id": "2CECaLAGTS5NRGxgbcxr",
+  "nome": "Davi Andrei",
+  "modelo": "eleven_multilingual_v2",
+  "ajustes": {
+   "speed": 1.06,
+   "stability": 0.42,
+   "similarity_boost": 0.75,
+   "style": 0,
+   "use_speaker_boost": true
+  }
+ },
+ "falas": [
+  {
+   "id": "c04",
+   "onde": {
+    "passo": 4
+   },
+   "texto": "Seus números no alto: Instagram e TikTok, somados num total. Cole o link do jeito que vier, que o campo limpa sozinho.",
+   "arquivo": "falas/c04.wav",
+   "duracao": 6.316,
+   "inicio_voz": 0.032,
+   "palavras": [
+    {
+     "texto": "Seus",
+     "ini": 0.032,
+     "fim": 0.279
+    },
+    {
+     "texto": "números",
+     "ini": 0.325,
+     "fim": 0.615
+    },
+    {
+     "texto": "no",
+     "ini": 0.673,
+     "fim": 0.743
+    },
+    {
+     "texto": "alto:",
+     "ini": 0.801,
+     "fim": 1.068
+    },
+    {
+     "texto": "Instagram",
+     "ini": 1.149,
+     "fim": 1.637,
+     "dito": "Ínstagram"
+    },
+    {
+     "texto": "e",
+     "ini": 1.741,
+     "fim": 1.846
+    },
+    {
+     "texto": "TikTok,",
+     "ini": 1.881,
+     "fim": 2.403,
+     "dito": "Tík Tók,"
+    },
+    {
+     "texto": "somados",
+     "ini": 2.485,
+     "fim": 2.914
+    },
+    {
+     "texto": "num",
+     "ini": 2.972,
+     "fim": 3.065
+    },
+    {
+     "texto": "total.",
+     "ini": 3.111,
+     "fim": 3.483
+    },
+    {
+     "texto": "Cole",
+     "ini": 3.576,
+     "fim": 3.855
+    },
+    {
+     "texto": "o",
+     "ini": 3.878,
+     "fim": 3.901
+    },
+    {
+     "texto": "link",
+     "ini": 3.947,
+     "fim": 4.122
+    },
+    {
+     "texto": "do",
+     "ini": 4.191,
+     "fim": 4.238
+    },
+    {
+     "texto": "jeito",
+     "ini": 4.284,
+     "fim": 4.458
+    },
+    {
+     "texto": "que",
+     "ini": 4.481,
+     "fim": 4.551
+    },
+    {
+     "texto": "vier,",
+     "ini": 4.598,
+     "fim": 4.957
+    },
+    {
+     "texto": "que",
+     "ini": 5.039,
+     "fim": 5.12
+    },
+    {
+     "texto": "o",
+     "ini": 5.166,
+     "fim": 5.201
+    },
+    {
+     "texto": "campo",
+     "ini": 5.248,
+     "fim": 5.503
+    },
+    {
+     "texto": "limpa",
+     "ini": 5.55,
+     "fim": 5.77
+    },
+    {
+     "texto": "sozinho.",
+     "ini": 5.805,
+     "fim": 6.316
+    }
+   ]
+  }
+ ]
+}

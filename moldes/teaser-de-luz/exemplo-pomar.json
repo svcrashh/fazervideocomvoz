@@ -1,0 +1,157 @@
+{
+  "marca": "Pomar",
+  "titulo": "Teaser de luz · Pomar (marca fictícia)",
+  "duracao": 15,
+  "formatos": [
+    "16x9",
+    "9x16"
+  ],
+  "cores": {
+    "fundo": "#0F2A1C",
+    "luz": "#FF8A3D",
+    "noLuz": "#0F2A1C",
+    "texto": "#FFF6E6"
+  },
+  "ui": {
+    "superficie": "#FFF8EC",
+    "superficie2": "#FFFFFF",
+    "borda": "#EBD9BF",
+    "texto": "#1D2B22",
+    "texto2": "#5F6F63",
+    "destaque": "#FF4F87",
+    "noDestaque": "#FFFFFF",
+    "raio": 48
+  },
+  "fontes": {
+    "titulo": "Bricolage Grotesque",
+    "texto": "Space Grotesk",
+    "mono": "Source Code Pro"
+  },
+  "tituloCaixaAlta": false,
+  "logo": {
+    "texto": "pomar"
+  },
+  "promessa": "A feira vem até você",
+  "etiqueta": "NOVO",
+  "fragmentos": [
+    {
+      "tipo": "numero",
+      "nome": "Do sítio",
+      "titulo": "Produtores parceiros",
+      "valor": 48,
+      "rotulo": "da sua região"
+    },
+    {
+      "tipo": "lista",
+      "nome": "Cesta pronta",
+      "titulo": "Sua cesta da semana",
+      "itens": [
+        [
+          "Tomate italiano",
+          "1 kg"
+        ],
+        [
+          "Alface crespa",
+          "2 un"
+        ],
+        [
+          "Morango",
+          "300 g"
+        ]
+      ]
+    },
+    {
+      "tipo": "botao",
+      "nome": "Entrega marcada",
+      "acima": "Entrega",
+      "texto": "Receber no sábado",
+      "depois": "Marcado: sábado, 8h às 11h"
+    }
+  ],
+  "revelacao": {
+    "fundo": "#FFF8EC",
+    "blocos": [
+      {
+        "tipo": "cabecalho",
+        "sobre": "POMAR · SUA FEIRA",
+        "titulo": "Bom dia, Ana",
+        "sub": "Sua cesta chega sábado"
+      },
+      {
+        "tipo": "numero",
+        "itens": [
+          [
+            "48",
+            "produtores"
+          ],
+          [
+            "12",
+            "itens na cesta"
+          ]
+        ]
+      },
+      {
+        "tipo": "lista",
+        "titulo": "Sua cesta da semana",
+        "itens": [
+          [
+            "Tomate italiano",
+            "1 kg"
+          ],
+          [
+            "Alface crespa",
+            "2 un"
+          ],
+          [
+            "Morango",
+            "300 g"
+          ],
+          [
+            "Ovos caipiras",
+            "12 un"
+          ]
+        ]
+      },
+      {
+        "tipo": "chips",
+        "itens": [
+          "Orgânico",
+          "Da estação",
+          "Sem embalagem"
+        ]
+      },
+      {
+        "tipo": "botao",
+        "texto": "Receber no sábado"
+      }
+    ]
+  },
+  "fecho": {
+    "frase": [
+      "A feira",
+      "*chega antes.*"
+    ],
+    "data": "SÁBADO · 12.10",
+    "botao": "pomar.app"
+  },
+  "falas": [
+    {
+      "id": "promessa",
+      "texto": "A feira vem até você.",
+      "em": 0.3,
+      "ate": 1.8
+    },
+    {
+      "id": "fecho",
+      "texto": "Pomar. A feira chega antes.",
+      "em": 11.7,
+      "ate": 13.9
+    }
+  ],
+  "voz": {
+    "id": "2CECaLAGTS5NRGxgbcxr",
+    "nome": "Davi Andrei",
+    "perfil": "calmo",
+    "pronuncia": {}
+  }
+}

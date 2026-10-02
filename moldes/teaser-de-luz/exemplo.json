@@ -1,0 +1,110 @@
+{
+  "marca": "Lumma One",
+  "titulo": "Teaser de luz · Lumma One",
+  "duracao": 16,
+  "formatos": [
+    "16x9",
+    "9x16"
+  ],
+  "cores": {
+    "fundo": "#051524",
+    "luz": "#FF7900",
+    "noLuz": "#051524",
+    "texto": "#FDEDD4"
+  },
+  "ui": {
+    "superficie": "#0A2236",
+    "superficie2": "#123049",
+    "borda": "#21405A",
+    "texto": "#FDEDD4",
+    "texto2": "#B8AE9F",
+    "destaque": "#FF7900",
+    "noDestaque": "#051524",
+    "raio": 28
+  },
+  "fontes": {
+    "titulo": "Oswald",
+    "texto": "Rubik",
+    "mono": "Source Code Pro"
+  },
+  "tituloCaixaAlta": true,
+  "logo": {
+    "arquivo": "exemplo-midia/lumma1-creme.png",
+    "altura": 60
+  },
+  "promessa": "O press kit, de cara nova",
+  "etiqueta": "NOVO",
+  "fragmentos": [
+    {
+      "tipo": "imagem",
+      "nome": "Sua capa",
+      "arquivo": "exemplo-midia/lumma-g7ven-celular.jpg",
+      "largura": 780,
+      "recorte": [
+        30,
+        840,
+        640,
+        370
+      ]
+    },
+    {
+      "tipo": "campo",
+      "nome": "Kit do contratante",
+      "rotulo": "Para quem é?",
+      "texto": "Festival de Verão",
+      "ajuda": "Novo link · Validade: 7 dias"
+    },
+    {
+      "tipo": "botao",
+      "nome": "Publica na hora",
+      "acima": "Cores · Paletas",
+      "texto": "Salvar e publicar",
+      "depois": "Salvo e publicado agora"
+    }
+  ],
+  "revelacao": {
+    "imagem": {
+      "arquivo": "exemplo-midia/lumma-g7ven-celular.jpg",
+      "largura": 780,
+      "altura": 6526,
+      "rolar": [
+        0,
+        0.1
+      ]
+    }
+  },
+  "fecho": {
+    "frase": [
+      "Seu kit,",
+      "*de cara nova.*"
+    ],
+    "data": "OUTUBRO · 2026",
+    "botao": "lummaone.com/7"
+  },
+  "falas": [
+    {
+      "id": "promessa",
+      "texto": "O seu press kit, de cara nova.",
+      "em": 0.3,
+      "ate": 2.0
+    },
+    {
+      "id": "fecho",
+      "texto": "Lumma One. Veja em lummaone.com/7.",
+      "em": 12.7,
+      "ate": 15.7
+    }
+  ],
+  "voz": {
+    "id": "2CECaLAGTS5NRGxgbcxr",
+    "nome": "Davi Andrei",
+    "perfil": "reels",
+    "pronuncia": {
+      "Lumma": "Lúma",
+      "One": "Uân",
+      "press": "préss",
+      "kit": "kít",
+      "lummaone.com/7": "lúma uân ponto com barra sete"
+    }
+  }
+}

@@ -710,7 +710,38 @@ async function cmdConferir(a) {
 // Sem keyterms de propósito: enviesar a transcrição para a palavra certa esconderia a palavra errada.
 export const MODELO_STT = 'scribe_v2'
 export const chaveOuvida = (t) => String(t ?? '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim()
-const fichas = (t) => chaveOuvida(t).split(' ').filter(Boolean)
+
+// A transcrição escreve "12" e "1.248" onde a fala diz "doze" e "mil duzentas e quarenta e oito": os dois lados
+// viram extenso no masculino antes de comparar (português; em outro idioma o algarismo só bate com algarismo).
+const UNID = ['zero', 'um', 'dois', 'tres', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove', 'dez', 'onze', 'doze', 'treze', 'quatorze', 'quinze', 'dezesseis', 'dezessete', 'dezoito', 'dezenove']
+const DEZ = ['', '', 'vinte', 'trinta', 'quarenta', 'cinquenta', 'sessenta', 'setenta', 'oitenta', 'noventa']
+const CEM = ['', 'cento', 'duzentos', 'trezentos', 'quatrocentos', 'quinhentos', 'seiscentos', 'setecentos', 'oitocentos', 'novecentos']
+function ate999(n) {
+  if (n < 20) return UNID[n]
+  if (n < 100) return DEZ[Math.floor(n / 10)] + (n % 10 ? ' e ' + UNID[n % 10] : '')
+  if (n === 100) return 'cem'
+  return CEM[Math.floor(n / 100)] + (n % 100 ? ' e ' + ate999(n % 100) : '')
+}
+export function porExtenso(n) {
+  if (!Number.isSafeInteger(n) || n < 0 || n > 999999) return String(n)
+  const mil = Math.floor(n / 1000), resto = n % 1000
+  if (!mil) return ate999(resto)
+  const m = mil === 1 ? 'mil' : `${ate999(mil)} mil`
+  return resto ? `${m}${resto < 100 || resto % 100 === 0 ? ' e' : ''} ${ate999(resto)}` : m
+}
+const extenso = (t) => String(t ?? '').replace(/\d{1,3}(?:\.\d{3})+(?![\d.])|\d+/g, (x) => ` ${porExtenso(Number(x.replace(/\./g, '')))} `)
+const masculino = (f) => f === 'uma' ? 'um' : f === 'duas' ? 'dois' : f.replace(/entas$/, 'entos')
+const fichas = (t) => chaveOuvida(extenso(t)).split(' ').filter(Boolean).map(masculino)
+
+// Endereço ("marca.com/7") é palavra de risco que a transcrição grafa do jeito dela ("lumaone.com/7"):
+// vale uma letra de diferença em cada pedaço de 6 letras ou mais.
+const umaLetra = (a, b) => {
+  if (a === b) return true
+  if (Math.abs(a.length - b.length) > 1 || Math.min(a.length, b.length) < 6) return false
+  let i = 0
+  while (i < a.length && a[i] === b[i]) i++
+  return a.slice(i + (a.length >= b.length ? 1 : 0)) === b.slice(i + (b.length >= a.length ? 1 : 0))
+}
 
 // Quais fichas esperadas a transcrição não trouxe, pela maior subsequência comum (a ordem conta).
 export function faltasNaEscuta(esperadas, ouvidas) {
@@ -742,7 +773,8 @@ export function julgarEscuta(fala, ouvido, extras = []) {
   for (const [gi, g] of grupos.entries()) {
     const naOrdem = g.texto.every((_, i) => achada[k + i])
     k += g.texto.length
-    const ok = g.risco ? formas(g).some((fs) => fs.length && fs.every((f) => tem.has(f))) || grudada(gi) : naOrdem
+    const endereco = /[./]\S/.test(g.p.texto) && g.texto.every((f) => ouvidas.some((o) => umaLetra(f, o)))
+    const ok = g.risco ? formas(g).some((fs) => fs.length && fs.every((f) => tem.has(f))) || grudada(gi) || endereco : naOrdem
     if (!ok) faltas.push({ texto: g.p.texto, esperado: g.p.dito ?? g.p.texto, risco: g.risco })
   }
   return { riscos: grupos.filter((g) => g.risco).map((g) => g.p.texto), faltas, falhou: faltas.some((f) => f.risco) }

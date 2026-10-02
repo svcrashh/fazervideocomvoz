@@ -1,0 +1,95 @@
+{
+  "_sobre": "Exemplo Lumma One (patch notes de 01/10/2026). Rótulos conferidos em produção. Fotos e logo vêm da pasta do vídeo do Lumma, fora do repositório.",
+  "velocidade": "lista",
+  "semente": 11,
+  "marca": {
+    "nome": "LUMMA1",
+    "tema": "escuro",
+    "logo": "~/Desktop/lumma-patch-notes/molde/midia/marca/lumma1-cream.png",
+    "cores": {
+      "fundo": "#051524",
+      "superficie": "#0A2236",
+      "campo": "#123049",
+      "texto": "#FDEDD4",
+      "destaque": "#FF7900",
+      "tinta": "#051524",
+      "ok": "#3DDC97"
+    },
+    "fontes": { "titulo": "Oswald", "texto": "Rubik", "mono": "Source Code Pro" },
+    "pesoTitulo": 700,
+    "caixaAlta": true,
+    "inclina": -6,
+    "gradeFundo": true,
+    "luz": 0.15,
+    "grao": 0.05
+  },
+  "abertura": { "numero": 12, "linhas": ["novidades", "no seu press kit"], "selo": "01/10/2026" },
+  "itens": [
+    {
+      "etiqueta": "33 layouts",
+      "frase": "33 layouts no seu press kit",
+      "prova": {
+        "tipo": "grade", "titulo": "Layout", "selecionado": 1,
+        "itens": [
+          { "nome": "Night Signal", "cor": "#0A2236", "cor2": "#051524", "tinta": "#FF7900", "botao": "#FDEDD4" },
+          { "nome": "Rave", "cor": "#FF3EA5", "cor2": "#C6FF3D", "tinta": "#14121A", "botao": "#5EE6FF" },
+          { "nome": "Poster", "cor": "#F2E8D5", "cor2": "#E9D9BC", "tinta": "#E4572E", "botao": "#1E1E1E" },
+          { "nome": "Newspaper", "cor": "#EFEDE7", "cor2": "#D6D3CA", "tinta": "#1E1E1E", "botao": "#8A877F" },
+          { "nome": "Editorial", "cor": "#FFFFFF", "cor2": "#EDE6DA", "tinta": "#2B2B2B", "botao": "#B08D57" },
+          { "nome": "Luxe", "cor": "#1B1712", "cor2": "#0E0C09", "tinta": "#D9B26F", "botao": "#D9B26F" },
+          { "nome": "Afterhours", "cor": "#2A1240", "cor2": "#0D0618", "tinta": "#FF4FD8", "botao": "#7A5CFF" },
+          { "nome": "Brutalist", "cor": "#FFE600", "cor2": "#FFE600", "tinta": "#000000", "botao": "#000000" }
+        ],
+        "contador": { "de": 4, "ate": 33, "rotulo": "layouts" }
+      }
+    },
+    {
+      "etiqueta": "Cores",
+      "frase": "Paleta pronta ou cor a cor",
+      "prova": {
+        "tipo": "paleta", "titulo": "Paletas",
+        "paletas": [
+          { "nome": "Night Signal", "cores": ["#051524", "#000000", "#2B2F36", "#FF7900"], "previa": ["#051524", "#0A2236", "#FDEDD4", "#FF7900"] },
+          { "nome": "Rave", "cores": ["#C6FF3D", "#FF3EA5", "#5EE6FF", "#FFC53D"], "previa": ["#14121A", "#FF3EA5", "#C6FF3D", "#5EE6FF"] }
+        ],
+        "ordem": [0, 1]
+      }
+    },
+    {
+      "etiqueta": "Sua capa",
+      "frase": "Sua foto, na cor natural",
+      "prova": { "tipo": "foto", "src": "~/Desktop/lumma-patch-notes/molde/midia/g7ven/foto-1.jpg", "posicao": "50% 22%", "titulo": "G7VEN", "corTitulo": "#FDEDD4", "chips": ["Naturais", "Na cor do layout"], "chipAtivo": 0 }
+    },
+    {
+      "etiqueta": "Números",
+      "frase": "Instagram e TikTok, somados",
+      "prova": {
+        "tipo": "numeros", "titulo": "Instagram e TikTok",
+        "cartoes": [ { "rotulo": "Instagram @g7venn", "valor": 7129 }, { "rotulo": "TikTok @g7ven__", "valor": 70 } ],
+        "total": { "rotulo": "Total", "valor": 7199 }
+      }
+    },
+    {
+      "etiqueta": "Mais rápido",
+      "frase": "A página ficou mais leve",
+      "prova": { "tipo": "barra", "titulo": "Página do DJ", "rotulo": "Peso da página", "de": 2739, "para": 1060, "unidade": "KB", "nota": "Fotos em WebP" }
+    }
+  ],
+  "muro": {
+    "rotulo": "novidades",
+    "extras": ["Trajetória", "Personalizar mais", "Kit do contratante", "Link no WhatsApp", "Admin", "Celular e tablet", "Italiano e senha"]
+  },
+  "fecho": { "bordao": "Tá no ar.", "endereco": "lummaone.com/7" },
+  "voz": {
+    "perfil": "reels",
+    "voz": { "id": "2CECaLAGTS5NRGxgbcxr", "nome": "Davi Andrei", "modelo": "eleven_multilingual_v2" },
+    "ajustes": { "speed": 1.06 },
+    "pronuncia": { "Lumma": "Lúma", "One": "Uân", "press": "préss", "kit": "kít", "layouts": "lêiauts" },
+    "palavrasDeRisco": "Lumma,One,press,kit,layouts"
+  },
+  "trilha": { "semente": 1101, "identidade": { "genero": "house", "bpm": [120, 124], "modos": ["dorico", "menor"], "tons": ["D", "F", "G", "A"], "instrumentos": { "harmonia": ["orgao", "epiano"], "baixo": ["bass_note"], "percussao": ["kick", "clap", "hat", "hat_aberto"], "melodia": ["pluck"], "textura": ["pad_note"] } } },
+  "falas": [
+    { "id": "abertura", "onde": "abertura", "atraso": 0.25, "texto": "Doze novidades no seu press kit." },
+    { "id": "fecho", "onde": "muro", "atraso": 0.25, "texto": "Trinta e três layouts, seis idiomas. Lumma One. Tá no ar." }
+  ]
+}

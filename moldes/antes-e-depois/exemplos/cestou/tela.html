@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cestou — lista</title>
+<!-- Tela da marca fictícia Cestou (lista de compras), só para provar o molde com uma segunda marca. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Space+Grotesk:wght@400;500;700&display=swap">
+<style>
+:root { --fundo: #FFF6E8; --cartao: #FFFFFF; --tinta: #23123B; --apagado: #8A7F99; --verde: #12A150; --rosa: #FF4F79; --amarelo: #FFC52E; --azul: #2F7BFF; --linha: #EEE3D3; }
+* { box-sizing: border-box; margin: 0; }
+body { background: var(--fundo); color: var(--tinta); font: 500 18px "Space Grotesk", sans-serif; }
+header { display: flex; align-items: center; justify-content: space-between; padding: 22px 40px; }
+.marca { font: 800 26px "Unbounded"; display: flex; align-items: center; gap: 10px; }
+.marca i { width: 30px; height: 30px; border-radius: 10px; background: var(--rosa); display: inline-block; box-shadow: 8px 8px 0 var(--amarelo); }
+.topo { padding: 6px 40px 18px; display: flex; align-items: end; justify-content: space-between; gap: 20px; }
+h1 { font: 800 44px "Unbounded"; letter-spacing: -.02em; }
+.sub { color: var(--apagado); margin-top: 6px; }
+.btn { font: 700 18px "Space Grotesk"; padding: 14px 22px; border-radius: 14px; border: 2px solid var(--tinta); background: var(--cartao); white-space: nowrap; }
+.ativo .btn { background: var(--verde); color: #fff; border-color: var(--verde); }
+.lista { padding: 0 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.item { background: var(--cartao); border: 2px solid var(--linha); border-radius: 16px; padding: 14px 16px; display: flex; gap: 12px; align-items: center; font-size: 20px; }
+.item b { width: 26px; height: 26px; border-radius: 8px; border: 2.5px solid var(--linha); flex: none; }
+.antes .item:nth-child(3n+1) { transform: rotate(-1.4deg); } .antes .item:nth-child(4n+2) { transform: rotate(1.2deg) translateX(10px); }
+.grupos { padding: 0 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.grupo { background: var(--cartao); border-radius: 20px; padding: 18px; border-top: 10px solid var(--c); }
+.grupo h2 { font: 800 20px "Unbounded"; display: flex; justify-content: space-between; margin-bottom: 12px; }
+.grupo h2 span { font: 700 16px "Space Grotesk"; color: #fff; background: var(--c); border-radius: 99px; padding: 3px 10px; }
+.grupo .item { border: none; padding: 9px 2px; border-bottom: 2px dashed var(--linha); border-radius: 0; }
+.grupo .item b { border-color: var(--c); }
+@media (max-width: 600px) {
+  header { padding: 54px 22px 14px; } .topo { padding: 4px 22px 16px; flex-direction: column; align-items: start; }
+  h1 { font-size: 34px; } .lista, .grupos { grid-template-columns: 1fr; padding: 0 22px; gap: 10px; }
+  .lista .item:nth-child(n+10) { display: none; } .grupo { padding: 14px 16px; } .grupo .item { padding: 6px 2px; font-size: 18px; }
+}
+</style>
+</head>
+<body>
+<header><div class="marca"><i></i>cestou</div><div class="sub">Casa da Lu · sábado</div></header>
+<div class="topo" id="topo"><div><h1>Mercado</h1><div class="sub" id="sub">14 itens, na ordem em que você lembrou</div></div><button class="btn" id="organizar">Organizar por corredor</button></div>
+<div id="conteudo"></div>
+<script>
+const itens = [['Bananas', 'h'], ['Detergente', 'l'], ['Leite', 'f'], ['Tomate', 'h'], ['Papel toalha', 'l'], ['Iogurte', 'f'], ['Alface', 'h'], ['Queijo minas', 'f'], ['Esponja', 'l'], ['Cebola', 'h'], ['Manteiga', 'f'], ['Sabão em pó', 'l'], ['Limão', 'h'], ['Requeijão', 'f']]
+const G = { h: ['Hortifrúti', '#12A150'], f: ['Frios e laticínios', '#2F7BFF'], l: ['Limpeza', '#FF4F79'] }
+const depois = new URLSearchParams(location.search).get('estado') === 'depois'
+const c = document.getElementById('conteudo')
+if (!depois) {
+  c.className = 'lista antes'
+  c.innerHTML = itens.map(([n]) => `<div class="item"><b></b>${n}</div>`).join('')
+} else {
+  document.getElementById('topo').classList.add('ativo')
+  document.getElementById('organizar').textContent = '✓ Por corredor'
+  document.getElementById('sub').textContent = '3 corredores, na ordem do mercado'
+  c.className = 'grupos'
+  c.innerHTML = Object.entries(G).map(([k, [nome, cor]]) => {
+    const g = itens.filter((i) => i[1] === k)
+    return `<div class="grupo" style="--c:${cor}"><h2>${nome}<span>${g.length}</span></h2>${g.map(([n]) => `<div class="item"><b></b>${n}</div>`).join('')}</div>`
+  }).join('')
+}
+</script>
+</body>
+</html>

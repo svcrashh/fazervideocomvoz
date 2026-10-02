@@ -1,0 +1,144 @@
+{
+  "nome": "cestou-por-corredor",
+  "marca": {
+    "nome": "cestou",
+    "logo": null,
+    "url": "cestou.app",
+    "cores": {
+      "fundo": "#FFF6E8",
+      "superficie": "#FFFFFF",
+      "texto": "#23123B",
+      "apagado": "rgba(35,18,59,.6)",
+      "linha": "rgba(35,18,59,.12)",
+      "acento": "#FF4F79",
+      "sobreAcento": "#FFFFFF"
+    },
+    "fontes": {
+      "titulo": "Unbounded",
+      "tituloPeso": 800,
+      "tituloCaixaAlta": false,
+      "tituloInclinacao": 0,
+      "texto": "Space Grotesk",
+      "mono": "Space Grotesk"
+    }
+  },
+  "variacao": "corte",
+  "textos": {
+    "promessa": [
+      [
+        {
+          "t": "Mercado"
+        }
+      ],
+      [
+        {
+          "t": "em "
+        },
+        {
+          "t": "ordem",
+          "k": true
+        }
+      ]
+    ],
+    "antes": "Antes",
+    "depois": "Depois",
+    "virada": "Fácil.",
+    "bordao": [
+      [
+        {
+          "t": "Cada coisa"
+        }
+      ],
+      [
+        {
+          "t": "no "
+        },
+        {
+          "t": "lugar.",
+          "k": true
+        }
+      ]
+    ]
+  },
+  "gatilho": {
+    "titulo": "Lista",
+    "opcoes": [
+      "Do jeito que lembrei",
+      "Por corredor"
+    ],
+    "escolha": 1
+  },
+  "falas": [
+    {
+      "id": "antes",
+      "texto": "Lista de compras toda bagunçada?"
+    },
+    {
+      "id": "depois",
+      "texto": "Um toque, e o Cestou separa tudo por corredor."
+    }
+  ],
+  "captura": {
+    "url": "exemplos/cestou/tela.html",
+    "esperar": 900,
+    "telas": {
+      "desk": {
+        "w": 1120,
+        "h": 800,
+        "escala": 2
+      },
+      "cel": {
+        "w": 390,
+        "h": 844,
+        "escala": 3
+      }
+    },
+    "depois": {
+      "url": "exemplos/cestou/tela.html?estado=depois"
+    }
+  },
+  "formatos": {
+    "16x9": {
+      "tela": "desk",
+      "foco": [
+        0,
+        0,
+        1120,
+        800
+      ],
+      "detalhe": [
+        560,
+        330
+      ],
+      "zoomDetalhe": 2.2
+    },
+    "9x16": {
+      "tela": "cel",
+      "foco": [
+        0,
+        0,
+        390,
+        480
+      ],
+      "detalhe": [
+        195,
+        380
+      ],
+      "zoomDetalhe": 2
+    },
+    "1x1": {
+      "tela": "desk",
+      "foco": [
+        60,
+        0,
+        1000,
+        800
+      ],
+      "detalhe": [
+        560,
+        330
+      ],
+      "zoomDetalhe": 2
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "nome": "sobrou",
+  "formatos": ["9x16", "1x1"],
+  "marca": {
+    "nome": "sobrou",
+    "cores": { "fundo": "#FFF4E8", "superficie": "#FFFFFF", "campo": "#FFFFFF", "borda": "#F1D9C4", "texto": "#2A1E5C", "apoio": "#8C83A8", "destaque": "#FF5A36", "ok": "#14B886", "sobreDestaque": "#FFFFFF", "sombra": "#7A4B2A" },
+    "fontes": { "titulo": "Bricolage Grotesque", "texto": "Space Grotesk", "mono": "Space Grotesk" },
+    "caixaAlta": false,
+    "raio": 36,
+    "fundo": { "brilho": 0.10, "cor2": "#FFC83D" },
+    "logo": { "texto": "sobrou", "ponto": "." }
+  },
+  "voz": {
+    "locucao": "voz/sobrou/locucao.json",
+    "trechos": [ { "fala": "s1", "em": 2.3 } ]
+  },
+  "cenas": [
+    {
+      "tipo": "pergunta", "dur": 8.8,
+      "titulo": "O que tem na geladeira?", "destaque": "geladeira?",
+      "placeholder": "Digite o que sobrou…",
+      "roleta": ["meio pimentão e arroz", "frango de ontem", "3 bananas maduras", "queijo e pão de forma"],
+      "texto": "2 ovos, tomate e pão amanhecido",
+      "modo": "digita", "em": 2.0, "vel": 15, "teclado": "tela",
+      "resposta": {
+        "em": 4.7, "tipo": "cartao",
+        "titulo": "Shakshuka de pão",
+        "chips": ["15 min", "1 frigideira", "2 porções"],
+        "linhas": ["Refogue o tomate até virar molho.", "Abra dois espaços e quebre os ovos.", "Tampe por 4 min e sirva com o pão tostado."]
+      }
+    },
+    {
+      "tipo": "frase", "dur": 2.9,
+      "texto": "Sobrou? Vira janta.", "destaque": "janta.",
+      "pilulas": [ { "t": "sem mercado" }, { "t": "sem desperdício" } ]
+    },
+    {
+      "tipo": "fecho", "dur": 3.4,
+      "digita": "sobrou.app", "em": 0.2,
+      "bordao": "Receita com o que você já tem."
+    }
+  ]
+}

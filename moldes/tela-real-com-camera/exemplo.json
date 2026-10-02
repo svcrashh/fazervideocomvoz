@@ -1,0 +1,28 @@
+{
+  "id": "lumma-qr-do-kit",
+  "gravacao": "~/Desktop/moldes-teste/tela-real-com-camera/gravacoes/lumma/saida/computador",
+  "saida": "~/Desktop/moldes-teste/tela-real-com-camera/videos",
+  "formatos": ["16x9", "9x16"],
+  "titulo": ["Mostre o QR", "do seu kit"],
+  "rotulo": "LUMMA1 · passo a passo",
+  "textoPasso": "Passo {n} de {N}",
+  "endereco": "lummaone.com",
+  "etapas": [
+    { "passos": [1, 2] },
+    { "intertitulo": "Agora o QR", "passos": [3, 4] }
+  ],
+  "fim": { "linha": "Pronto!", "apoio": "lummaone.com/7" },
+  "voz": { "locucao": "~/Desktop/moldes-teste/tela-real-com-camera/voz/lumma/locucao.json" },
+  "marca": {
+    "cores": { "fundo": "#051524", "superficie": "#0A2236", "texto": "#FDEDD4", "destaque": "#FF7900", "sobreDestaque": "#051524", "veu": "#051524", "fimFundo": "#FF7900", "fimTexto": "#051524" },
+    "veu": 0.6,
+    "textura": "pontos",
+    "fontesPasta": "~/Desktop/lumma-patch-notes/molde/fontes",
+    "fontes": {
+      "titulo": { "familia": "Oswald", "peso": 700, "caixa": "alta" },
+      "texto": { "familia": "Rubik", "peso": 500, "pesoForte": 600 },
+      "mono": { "familia": "Source Code Pro", "peso": 600 }
+    },
+    "logo": { "arquivo": "~/Desktop/lumma-patch-notes/molde/midia/marca/lumma1-midnight.png", "w": 360, "h": 68 }
+  }
+}

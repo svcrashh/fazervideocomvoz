@@ -1,0 +1,10 @@
+{
+  "idioma": "pt-BR",
+  "perfil": "reels",
+  "voz": { "id": "2CECaLAGTS5NRGxgbcxr", "nome": "Davi Andrei", "modelo": "eleven_multilingual_v2" },
+  "ajustes": { "speed": 1.06 },
+  "pronuncia": {},
+  "falas": [
+    { "id": "s1", "onde": { "capitulo": 1 }, "texto": "Diz o que sobrou na geladeira. Em segundos, a receita tá na tela." }
+  ]
+}

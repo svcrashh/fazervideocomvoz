@@ -1,0 +1,96 @@
+{
+ "versao": 1,
+ "idioma": "pt-BR",
+ "voz": {
+  "provedor": "elevenlabs",
+  "id": "2CECaLAGTS5NRGxgbcxr",
+  "nome": "Davi Andrei",
+  "modelo": "eleven_multilingual_v2",
+  "ajustes": {
+   "speed": 1.06,
+   "stability": 0.42,
+   "similarity_boost": 0.75,
+   "style": 0,
+   "use_speaker_boost": true
+  }
+ },
+ "falas": [
+  {
+   "id": "s1",
+   "onde": {
+    "capitulo": 1
+   },
+   "texto": "Diz o que sobrou na geladeira. Em segundos, a receita tá na tela.",
+   "arquivo": "falas/s1.wav",
+   "duracao": 3.529,
+   "inicio_voz": 0,
+   "palavras": [
+    {
+     "texto": "Diz",
+     "ini": 0,
+     "fim": 0.255
+    },
+    {
+     "texto": "o",
+     "ini": 0.302,
+     "fim": 0.325
+    },
+    {
+     "texto": "que",
+     "ini": 0.36,
+     "fim": 0.441
+    },
+    {
+     "texto": "sobrou",
+     "ini": 0.488,
+     "fim": 0.755
+    },
+    {
+     "texto": "na",
+     "ini": 0.801,
+     "fim": 0.859
+    },
+    {
+     "texto": "geladeira.",
+     "ini": 0.906,
+     "fim": 1.405
+    },
+    {
+     "texto": "Em",
+     "ini": 1.486,
+     "fim": 1.637
+    },
+    {
+     "texto": "segundos,",
+     "ini": 1.718,
+     "fim": 2.218
+    },
+    {
+     "texto": "a",
+     "ini": 2.264,
+     "fim": 2.31
+    },
+    {
+     "texto": "receita",
+     "ini": 2.368,
+     "fim": 2.728
+    },
+    {
+     "texto": "tá",
+     "ini": 2.763,
+     "fim": 2.844
+    },
+    {
+     "texto": "na",
+     "ini": 2.891,
+     "fim": 2.961
+    },
+    {
+     "texto": "tela.",
+     "ini": 3.019,
+     "fim": 3.529
+    }
+   ]
+  }
+ ]
+}

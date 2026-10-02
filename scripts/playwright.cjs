@@ -29,7 +29,8 @@ function carregar(projeto) {
     try { const pw = require(c); if (pw.chromium) return { pw, onde: c } } catch {}
   }
   const err = new Error('Playwright não encontrado nesta máquina.\n' +
-    'Instale dentro da pasta do projeto do vídeo:\n  npm i -D playwright && npx playwright install chromium')
+    'Instale dentro da pasta do projeto do vídeo:\n  npm i -D playwright && npx playwright install chromium\n' +
+    'ou, se ele já existe em outra pasta, aponte para ela: PLAYWRIGHT_PATH=<pasta>/node_modules/playwright')
   err.code = 'SEM_PLAYWRIGHT'
   throw err
 }

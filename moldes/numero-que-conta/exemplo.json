@@ -1,0 +1,60 @@
+{
+  "titulo": "Lumma One · update 01/10 em números",
+  "idioma": "pt-BR",
+  "formatos": ["16x9", "9x16"],
+  "chamada": "Lumma One · o update de outubro",
+  "marca": {
+    "nome": "Lumma One",
+    "logo": "exemplos/lumma1-cream.png",
+    "logoProporcao": 5.33,
+    "cores": {
+      "fundo": "#051524",
+      "texto": "#FDEDD4",
+      "acento": "#FF7900",
+      "legendaFundo": "#0A2236",
+      "cartoes": ["#FF7900", "#FDEDD4", "#123049"]
+    },
+    "fontes": {
+      "numero": { "familia": "Oswald", "peso": 700, "caixaAlta": true },
+      "texto": { "familia": "Rubik", "peso": 500 },
+      "etiqueta": { "familia": "Source Code Pro", "peso": 600 }
+    },
+    "grade": true,
+    "brilho": 0.13,
+    "grao": 0.06
+  },
+  "voz": {
+    "id": "2CECaLAGTS5NRGxgbcxr",
+    "nome": "Davi Andrei",
+    "perfil": "reels",
+    "ajustes": { "speed": 1.06 },
+    "pronuncia": { "press": "préss", "kit": "kít" }
+  },
+  "trilha": {
+    "semente": 1001,
+    "identidade": {
+      "genero": "house", "bpm": [120, 124], "modos": ["dorico", "menor"], "tons": ["D", "F", "G", "A"],
+      "instrumentos": { "harmonia": ["orgao", "epiano"], "baixo": ["bass_note"], "percussao": ["kick", "clap", "hat", "hat_aberto"], "melodia": ["pluck"], "textura": ["pad_note"] }
+    }
+  },
+  "blocos": [
+    {
+      "tipo": "contador", "de": 0, "ate": 12, "sufixo": "", "rotulo": "novidades no ar",
+      "lista": ["Layouts", "Cores", "Sua capa", "Números", "Trajetória", "Personalizar mais", "Kit do contratante", "Link no WhatsApp", "Admin", "Celular e tablet", "Mais rápido", "E mais"],
+      "fala": "Doze novidades no seu press kit, já no ar."
+    },
+    {
+      "tipo": "cartoes", "cada": 1.5,
+      "itens": [
+        { "valor": 33, "rotulo": "layouts prontos" },
+        { "valor": 6, "rotulo": "idiomas na página" },
+        { "valor": 6, "rotulo": "tamanhos de tela" }
+      ]
+    },
+    {
+      "tipo": "antes-depois", "nome": "Peso da página", "de": 2739, "ate": 1060, "unidade": "KB", "rotulo": "2,6× mais leve",
+      "fala": "E a sua página carrega com menos da metade do peso."
+    },
+    { "tipo": "fecho", "bordao": "Tudo isso já está no ar.", "url": "lummaone.com/7" }
+  ]
+}

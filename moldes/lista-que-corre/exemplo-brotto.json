@@ -1,0 +1,76 @@
+{
+  "_sobre": "Marca fictícia, para provar que o molde não tem marca embutida: Brotto, feira orgânica entregue em casa. Clara, colorida, outra fonte, sem caixa alta, sem inclinação, sem logo em imagem.",
+  "velocidade": "rajada",
+  "semente": 4,
+  "marca": {
+    "nome": "brotto",
+    "tema": "claro",
+    "cores": {
+      "fundo": "#FFF6EA",
+      "superficie": "#FFFFFF",
+      "campo": "#F6EEE2",
+      "texto": "#1D2B22",
+      "destaque": "#FF5A36",
+      "tinta": "#FFFFFF",
+      "ok": "#1F9D55"
+    },
+    "paleta": ["#FFE0D4", "#D5F0DD", "#FFF0BF", "#DCEBFA", "#F3E1F7", "#E6F4C8"],
+    "fontes": { "titulo": "Unbounded", "texto": "Space Grotesk", "mono": "Space Grotesk" },
+    "pesoTitulo": 700,
+    "caixaAlta": false,
+    "inclina": 0,
+    "luz": 0.1,
+    "grao": 0.03
+  },
+  "abertura": { "numero": 11, "linhas": ["novidades", "na sua feira"], "selo": "Brotto 4.2" },
+  "itens": [
+    {
+      "etiqueta": "Cesta pronta", "frase": "Cesta da semana em 1 toque", "cartaz": "Sua cesta da semana num toque só", "palavraChave": "toque",
+      "prova": {
+        "tipo": "grade", "titulo": "Cestas", "colunas": 3, "selecionado": 0,
+        "itens": [
+          { "nome": "Cesta verde", "cor": "#BFE3C0", "cor2": "#5DBB63" },
+          { "nome": "Frutas da estação", "cor": "#FFD6A5", "cor2": "#FF8C42" },
+          { "nome": "Café da manhã", "cor": "#FFE8A3", "cor2": "#F4B942" },
+          { "nome": "Sopa de inverno", "cor": "#F7C6B5", "cor2": "#D9534F" },
+          { "nome": "Salada fácil", "cor": "#D9F2B4", "cor2": "#8CC63F" },
+          { "nome": "Temperos", "cor": "#CDE7D8", "cor2": "#2E8B57" }
+        ],
+        "contador": { "de": 0, "ate": 12, "rotulo": "cestas prontas" }
+      }
+    },
+    {
+      "etiqueta": "Horário", "frase": "Você escolhe a hora da entrega", "cartaz": "Chega na hora que você escolher", "palavraChave": "hora",
+      "prova": { "tipo": "escolha", "titulo": "Entrega", "pergunta": "Quando a gente entrega?", "opcoes": ["8h – 10h", "10h – 12h", "14h – 16h", "16h – 18h", "18h – 20h", "Sábado"], "ativa": 4, "botao": "Confirmar horário" }
+    },
+    {
+      "etiqueta": "Frete grátis", "frase": "Frete grátis a partir de R$ 60", "cartaz": "Frete grátis acima de R$ 60", "palavraChave": "grátis",
+      "prova": { "tipo": "barra", "titulo": "Carrinho", "rotulo": "Seu carrinho", "de": 42, "para": 60, "max": 60, "unidade": "reais", "nota": "Frete grátis liberado" }
+    },
+    {
+      "etiqueta": "Troca na hora", "frase": "Mudou de ideia? Troque o item", "cartaz": "Troque um item sem ligar pra ninguém", "palavraChave": "Troque",
+      "prova": { "tipo": "campo", "titulo": "Pedido 4821", "rotulo": "Item da cesta", "dica": "Toque para trocar", "de": "Alface crespa · 1 un · Sítio Boa Vista", "para": "Rúcula orgânica", "resultado": "Troca feita · mesmo preço" }
+    },
+    {
+      "etiqueta": "Produtor", "frase": "Conheça quem plantou", "cartaz": "Conheça quem plantou a sua comida", "palavraChave": "plantou",
+      "prova": { "tipo": "lista", "titulo": "Sítio Boa Vista", "linhas": ["Orgânico certificado", "A 38 km de você", { "t": "Colhido ontem", "destaque": true }] }
+    },
+    {
+      "etiqueta": "Avisos", "frase": "Avisos só do que importa", "cartaz": "Aviso só do que importa", "palavraChave": "importa",
+      "prova": { "tipo": "interruptores", "titulo": "Notificações", "itens": [ { "nome": "Pedido saiu", "ligado": true }, { "nome": "Promoções", "ligado": true }, { "nome": "Cesta chegou", "ligado": true } ], "troca": 1, "aviso": "Promoções desligadas" }
+    }
+  ],
+  "muro": { "rotulo": "novidades", "extras": ["Pix no app", "Cupom de indicação", "Lista de compras", "Receitas da cesta", "Modo escuro"] },
+  "fecho": { "cartoes": ["Pequenas mudanças,", "feira mais fácil."], "cartoesEm": ["rajada"], "bordao": "Da roça pra sua porta.", "endereco": "brotto.app" },
+  "voz": {
+    "perfil": "reels",
+    "voz": { "id": "GDzHdQOi6jjf8zaXhCYD", "nome": "Raquel", "modelo": "eleven_multilingual_v2" },
+    "pronuncia": { "Brotto": "Brôto" },
+    "palavrasDeRisco": "Brotto"
+  },
+  "trilha": { "semente": 4004, "identidade": { "genero": "acustico", "bpm": [96, 108], "modos": ["maior"], "tons": ["C", "D", "F", "G"], "instrumentos": { "harmonia": ["corda", "piano"], "baixo": ["bass_note"], "percussao": ["kick", "shaker", "aro"], "melodia": ["pluck"], "textura": ["pad_note"] } } },
+  "falas": [
+    { "id": "abertura", "onde": "abertura", "atraso": 0.2, "texto": "Onze novidades na sua feira." },
+    { "id": "fecho", "onde": "muro", "atraso": 0.2, "texto": "Brotto. Da roça pra sua porta." }
+  ]
+}

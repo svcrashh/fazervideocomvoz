@@ -1,0 +1,148 @@
+{
+  "nome": "lumma-fotos-naturais",
+  "marca": {
+    "nome": "LUMMA1",
+    "logo": "exemplos/lumma/logo.png",
+    "url": "lummaone.com/7",
+    "cores": {
+      "fundo": "#051524",
+      "superficie": "#0A2236",
+      "texto": "#FDEDD4",
+      "apagado": "rgba(253,237,212,.62)",
+      "linha": "rgba(253,237,212,.14)",
+      "acento": "#FF7900",
+      "sobreAcento": "#051524"
+    },
+    "fontes": {
+      "titulo": "Oswald",
+      "tituloPeso": 700,
+      "tituloCaixaAlta": true,
+      "tituloInclinacao": -7,
+      "texto": "Rubik",
+      "mono": "Source Code Pro"
+    }
+  },
+  "variacao": "corte",
+  "textos": {
+    "promessa": [
+      [
+        {
+          "t": "Sua foto,"
+        }
+      ],
+      [
+        {
+          "t": "do seu "
+        },
+        {
+          "t": "jeito",
+          "k": true
+        }
+      ]
+    ],
+    "antes": "Antes",
+    "depois": "Agora",
+    "virada": "Natural.",
+    "bordao": [
+      [
+        {
+          "t": "Foto "
+        },
+        {
+          "t": "natural",
+          "k": true
+        }
+      ],
+      [
+        {
+          "t": "num toque."
+        }
+      ]
+    ]
+  },
+  "gatilho": {
+    "titulo": "Fotos",
+    "opcoes": [
+      "Na cor do layout",
+      "Naturais"
+    ],
+    "escolha": 1
+  },
+  "falas": [
+    {
+      "id": "antes",
+      "texto": "A sua foto sempre saía pintada na cor do layout."
+    },
+    {
+      "id": "depois",
+      "texto": "Agora é um toque em Naturais, e ela aparece do jeito que você tirou."
+    }
+  ],
+  "captura": {
+    "url": "https://lummaone.com/7",
+    "bloquear": [
+      "presskit_analytics_events",
+      "record_device"
+    ],
+    "esperar": 1500,
+    "telas": {
+      "desk": {
+        "w": 1440,
+        "h": 900,
+        "escala": 2
+      },
+      "cel": {
+        "w": 390,
+        "h": 844,
+        "escala": 3
+      }
+    },
+    "depois": {
+      "css": ".pk-page img { filter: none !important; mix-blend-mode: normal !important; }"
+    }
+  },
+  "formatos": {
+    "16x9": {
+      "tela": "desk",
+      "foco": [
+        100,
+        0,
+        1240,
+        900
+      ],
+      "detalhe": [
+        960,
+        330
+      ],
+      "zoomDetalhe": 2.6
+    },
+    "9x16": {
+      "tela": "cel",
+      "foco": [
+        0,
+        40,
+        390,
+        480
+      ],
+      "detalhe": [
+        195,
+        300
+      ],
+      "zoomDetalhe": 2.2
+    },
+    "1x1": {
+      "tela": "desk",
+      "foco": [
+        100,
+        0,
+        960,
+        770
+      ],
+      "detalhe": [
+        960,
+        330
+      ],
+      "zoomDetalhe": 2.2
+    }
+  }
+}
